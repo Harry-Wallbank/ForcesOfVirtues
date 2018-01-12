@@ -1,0 +1,57 @@
+class EnemyScript : ZilchComponent
+{
+    var Health : Integer = 100;
+
+    function Initialize(init : CogInitializer)
+    {
+        Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
+    }
+
+    function OnLogicUpdate(event : UpdateEvent)
+    {
+        if(!MovementScript.MyTurn && !this.LevelSettings.BattleSceneSetup.Start)
+        {
+            var movedir = Real3(0,0,0);
+            movedir = this.FindClosestPlayer(movedir);
+
+            if(movedir.X > 4 || movedir.Y > 4 || movedir.X < -4 || movedir.Y < -4)
+            {
+                MovementScript.MyTurn = !MovementScript.MyTurn;
+                return;
+            }
+
+            movedir = Math.Normalize(movedir);
+            movedir = Math.Round(movedir);
+            
+            this.Owner.Transform.Translation += movedir;
+            MovementScript.MyTurn = !MovementScript.MyTurn;
+        }
+    }
+
+    function FindClosestPlayer (movedir : Real3) : Real3
+    {
+        var playerList = this.Space.FindAllObjectsByName("Player");
+        var distance : Real = 1000000;
+        var closePlayer : Cog = null;
+        
+        foreach (var player in playerList)
+        {
+            var curDistance = Math.Distance(this.Owner.Transform.Translation, player.Transform.Translation);
+            if( curDistance < distance)
+            {
+                distance = curDistance;
+                closePlayer = player;
+            }
+        }
+        
+        if(closePlayer != null)
+        {
+            movedir = closePlayer.Transform.Translation - this.Owner.Transform.Translation;
+            if(Math.Abs(movedir.X) > Math.Abs(movedir.Y))
+                movedir.Y = 0;
+            else
+                movedir.X = 0;
+        }
+        return movedir;
+    }
+}

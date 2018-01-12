@@ -1,0 +1,65 @@
+class CollisionScript : ZilchComponent
+{
+    [Property]
+    var Right : Boolean;
+    [Property]
+    var Top : Boolean;
+    [Property]
+    var Bottom : Boolean;
+    [Property]
+    var Left : Boolean;
+    var BattleBool : Boolean = true;
+    function Initialize(init : CogInitializer)
+    {
+        Zero.Connect(this.Owner, Events.CollisionStarted, this.OnCollisionStarted);
+        Zero.Connect(this.Owner, Events.CollisionEnded, this.OnCollisionEnded);
+    }
+    
+    function OnCollisionStarted(event : CollisionEvent)
+    {
+        if(event.OtherObject.Name == "OuterWall")
+        {
+            if(this.Left)
+                this.Owner.Parent.MovementScript.Left = this.Left;
+            if(this.Right)
+                this.Owner.Parent.MovementScript.Right = this.Right;
+            if(this.Top)
+                this.Owner.Parent.MovementScript.Top = this.Top;
+            if(this.Bottom)
+                this.Owner.Parent.MovementScript.Bottom = this.Bottom;
+        }
+        
+        if(event.OtherObject.Name == "Enemy")
+        {
+            BattleSceneSetup.PlayerOldPos = this.Owner.Parent.Transform.Translation;
+            BattleSceneSetup.EnemyOldPos = event.OtherObject.Transform.Translation;
+            
+            this.LevelSettings.BattleSceneSetup.PlayerBoardPos = this.Owner.Parent.Transform.Translation;
+            this.LevelSettings.BattleSceneSetup.EnemyBoardPos = event.OtherObject.Transform.Translation;
+            
+            event.OtherObject.Transform.Translation = Real3((this.LevelSettings.BoardScript.Columns /2) -3,this.LevelSettings.BoardScript.Rows/2,12);
+            this.Owner.Parent.Transform.Translation = Real3((this.LevelSettings.BoardScript.Columns /2) +3,this.LevelSettings.BoardScript.Rows/2,12);
+            
+            this.LevelSettings.BattleSceneSetup.Player = this.Owner.Parent;
+            this.LevelSettings.BattleSceneSetup.Enemy = event.OtherObject;
+            
+            this.LevelSettings.BattleSceneSetup.Start = true;
+        }
+    }
+    
+    function OnCollisionEnded(event : CollisionEvent)
+    {
+        if(event.OtherObject.Name == "OuterWall")
+        {
+            
+            if(this.Left)
+                this.Owner.Parent.MovementScript.Left = !this.Left;
+            if(this.Right)
+                this.Owner.Parent.MovementScript.Right = !this.Right;
+            if(this.Top)
+                this.Owner.Parent.MovementScript.Top = !this.Top;
+            if(this.Bottom)
+                this.Owner.Parent.MovementScript.Bottom = !this.Bottom;
+        }
+    }
+}

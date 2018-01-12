@@ -1,0 +1,62 @@
+class BattleSceneSetup : ZilchComponent
+{
+    var Start : Boolean = false;
+    var Setup : Boolean = false;
+    
+    var Enemy : Cog = null;
+    var Player : Cog = null;
+    
+    var PlayerBoardPos : Real3;
+    var EnemyBoardPos : Real3;
+    
+    [Static]
+    var Battling : Boolean = false;
+    
+    [Static]
+    var PlayerOldPos : Real3;
+    
+    [Static]
+    var EnemyOldPos : Real3;
+    
+    var Count : Integer = 0;
+    function Initialize(init : CogInitializer)
+    {
+        Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
+    }
+
+    function OnLogicUpdate(event : UpdateEvent)
+    {
+        if(this.Start)
+            this.Setup = true;
+            ++this.Count;
+        if(this.Setup && this.Count < 2)
+        {
+            var random : Random = new Random();
+            
+            var enemyProb : Real = random.Range(49,100);
+            var playerProb :Real = random.Range(49,100);
+            
+            enemyProb = Math.Round(enemyProb);
+            playerProb = Math.Round(playerProb);
+            
+            if(random.DieRoll(100) < playerProb)
+            {
+                this.Enemy.EnemyScript.Health - random.DieRoll(80);
+            }
+            
+            if(random.DieRoll(100) < enemyProb)
+            {
+                this.Player.MovementScript.Health - random.DieRoll(80);
+            }
+            
+            var battleBackground = this.Space.CreateAtPosition(Archetype.Battle, Real3(this.LevelSettings.BoardScript.Columns/2, this.LevelSettings.BoardScript.Rows/2,10));
+            battleBackground.Transform.Scale = Real3(this.LevelSettings.BoardScript.Columns, this.LevelSettings.BoardScript.Rows, 1);
+            
+            this.Player.Transform.Translation = BattleSceneSetup.PlayerOldPos;
+            this.Enemy.Transform.Translation = BattleSceneSetup.EnemyOldPos;
+            
+            this.Setup = !this.Setup;
+            this.Start = !this.Start;
+        }
+    }
+}

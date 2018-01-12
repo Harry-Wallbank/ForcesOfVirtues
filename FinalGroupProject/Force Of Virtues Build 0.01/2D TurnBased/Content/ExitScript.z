@@ -1,0 +1,17 @@
+class ExitScript : ZilchComponent
+{
+    [Static]
+    var Enemies : Integer = 0;
+    function Initialize(init : CogInitializer)
+    {
+        Zero.Connect(this.Owner, Events.CollisionPersisted, this.OnCollisionPersisted);
+    }
+
+    function OnCollisionPersisted(event : CollisionEvent)
+    {
+        if(event.OtherObject.Name == "Player" && ExitScript.Enemies == 0)
+        {
+            this.Space.DestroyAllFromLevel();
+        }
+    }
+}

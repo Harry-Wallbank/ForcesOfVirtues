@@ -1,0 +1,78 @@
+class EnemyScript : ZilchComponent
+{
+    var PlayerTurnEnded : Boolean = false;
+    var EnemyTurn : Boolean;
+    [Static]
+    var Battling : Boolean;
+    
+    function Initialize(init : CogInitializer)
+    {
+        this.PlayerTurnEnded = true;
+        Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
+    }
+
+    function OnLogicUpdate(event : UpdateEvent)
+    {
+        if(!EnemyScript.Battling)
+        {
+            this.PlayerTurnEnded = true;
+            foreach(var players in this.LevelSettings.BoardManager.PlayerArray)
+            {
+                if(players.PlayerMovement.PlayerTurn)
+                {
+                    this.PlayerTurnEnded = false;
+                }
+            }
+            
+            if(this.PlayerTurnEnded)
+            {
+                this.EnemyTurn = true;
+                this.EnemyMovemement();
+            }
+        }
+    }
+    
+    function EnemyMovemement()
+    {
+        var movedir = Real3(0,0,0);
+        movedir = this.FindClosestPlayer();
+        
+        if(movedir.X > 4 || movedir.Y > 4 || movedir.X < -4 || movedir.Y < -4)
+        {
+            this.EnemyTurn = false;
+            return;
+        }
+        movedir = Math.Normalize(movedir);
+        movedir = Math.Round(movedir);
+        
+        this.Owner.Transform.Translation += movedir;
+        this.EnemyTurn = false;
+        return;
+    }
+    
+    function FindClosestPlayer () : Real3
+    {
+        var distance : Real = 100000;
+        var closeplayer : Cog = null;
+        
+        foreach(var player in this.LevelSettings.BoardManager.PlayerArray)
+        {
+            var curDistance = Math.Distance(this.Owner.Transform.Translation, player.Transform.Translation);
+            if (curDistance < distance)
+            {
+                distance = curDistance;
+                closeplayer = player;
+            }
+        }
+        var movedir : Real3 = Real3(0,0,0);
+        if(closeplayer != null)
+        {
+            movedir = closeplayer.Transform.Translation - this.Owner.Transform.Translation;
+            if(Math.Abs(movedir.X) > Math.Abs(movedir.Y))
+                movedir.Y = 0;
+            else
+                movedir.X = 0;
+        }
+        return movedir;
+    }
+}

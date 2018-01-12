@@ -1,0 +1,36 @@
+class BattleScriptLoader : ZilchComponent
+{
+    var Player : Cog = null;
+    var Enemy : Cog = null;
+    
+    var PlayerBoardPos : Real3;
+    var EnemyBoardPos : Real3;
+    
+    var BattleScriptEnabled : Boolean = false;
+    
+    function Initialize(init : CogInitializer)
+    {
+        Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
+    }
+    
+    function OnLogicUpdate(event : UpdateEvent)
+    {
+        if(this.BattleScriptEnabled)
+        {
+            PlayerMovement.Battling = true;
+            EnemyScript.Battling = true;
+            this.BattleSetup();
+            this.BattleScriptEnabled = false;
+        }
+    }
+    
+    function BattleSetup()
+    {
+        this.PlayerBoardPos = this.Player.Transform.Translation;
+        this.EnemyBoardPos = this.Enemy.Transform.Translation;
+        
+        this.Player.Transform.Translation = Real3(11,0,0);
+        this.Enemy.Transform.Translation = Real3(10,0,0);
+        
+    }
+}

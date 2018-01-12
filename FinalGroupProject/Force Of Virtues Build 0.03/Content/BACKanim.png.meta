@@ -1,0 +1,20 @@
+ImageContent = 
+{
+	SpriteSourceBuilder = 
+	{
+		string Name = "BACKanim",
+		uint64 ResourceId = 5a32283e93ac8849,
+		uint64 AtlasId = 5274cf95e4a661fd,
+		uint FrameSizeX = 51,
+		uint FrameSizeY = 20,
+		uint FrameCount = 2,
+		float FrameDelay = 0.5,
+		float OriginX = 25.5,
+		float OriginY = 10,
+		float PixelsPerUnit = 64,
+		bool Smoothing = false,
+		bool Looping = true,
+		Vec4 Slices = [0, 0, 0, 0],
+		SpriteFill Fill = Stretch,
+	},
+},

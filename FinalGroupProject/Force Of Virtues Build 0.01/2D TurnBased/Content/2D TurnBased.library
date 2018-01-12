@@ -1,0 +1,7 @@
+ContentLibrary = 
+{
+	string Name = "2D TurnBased",
+	uint64 LibraryId = 5a5e3b3e9235903a,
+	string SourceControlType = "",
+	bool ReadOnly = false,
+},

@@ -1,0 +1,104 @@
+class BoardManager : ZilchComponent
+{
+    [Property]
+    var Columns : Integer = 5;
+    [Property]
+    var Rows : Integer = 5;
+    
+    var Random : Random = Random();
+    
+    var PlayerSkinArray : Array[SpriteSource] = new Array[SpriteSource]();
+    var PlayerArray : Array[Cog] = new Array[Cog]();
+    var EnemySkinArray : Array[SpriteSource] = new Array[SpriteSource]();
+    var EnemyArray : Array[Cog] = new Array[Cog]();
+    
+    function Initialize(init : CogInitializer)
+    {
+        this.PlayerSkinArray.Add(SpriteSource.PlayerHeartAnimation);
+        this.PlayerSkinArray.Add(SpriteSource.PlayerRobotAnimation);
+        this.EnemySkinArray.Add(SpriteSource.EnemyHateAnimation);
+        this.EnemySkinArray.Add(SpriteSource.EnemyRobotAnimation);
+        this.BoardSetup(this.Columns,this.Rows);
+        this.CameraSetup(this.Columns,this.Rows);
+        this.EnemySetup(this.Columns,this.Rows);
+        this.PlayerSetup(this.Columns,this.Rows);
+    }
+    
+    function BoardSetup (columns : Integer, rows : Integer)
+    {
+        for(var x : Integer = -1; x<= columns; ++x)
+        {
+            for(var y : Integer = -1; y<= rows; ++y)
+            {
+                if(x == -1 || x == columns || y == -1 || y==rows)
+                {
+                    this.Space.CreateAtPosition(Archetype.Wall,Real3(x,y,0));
+                }
+                else
+                    this.Space.CreateAtPosition(Archetype.Floor,Real3(x,y,-1));
+            }
+        }
+        this.Space.CreateAtPosition(Archetype.Exit,Real3(columns-1,rows-1,0));
+    }
+    
+    function CameraSetup(columns : Integer, rows : Integer)
+    {
+        var camera = this.Space.FindFirstObjectByName("Camera");
+        
+        if(columns % 2 != 0)
+            camera.Transform.Translation = Real3(columns / 2, rows / 2, 40);
+        else
+            camera.Transform.Translation = Real3(columns / 2 -0.5, rows / 2 -0.5 , 40);
+        camera.Camera.Size = columns +1;
+    }
+    
+    function EnemySetup(columns : Integer, rows : Integer)
+    {
+        var lastSpawnPoint : Array[Real3] = new Array[Real3]();
+        for(var x : Integer = 0 ; x < 3 ; ++x)
+        {
+            var enemySpawnPoint = Real3(this.Random.DieRoll(columns -1),this.Random.DieRoll(rows -1),0);
+
+            while(enemySpawnPoint.X <= 3 && enemySpawnPoint.Y <= 3 || enemySpawnPoint.X == columns -1 && enemySpawnPoint.Y == rows -1)
+            {
+                enemySpawnPoint = Real3(this.Random.DieRoll(columns -1),this.Random.DieRoll(rows -1),0);
+                foreach(var spawnpoint in lastSpawnPoint)
+                {
+                    if(enemySpawnPoint == spawnpoint)
+                        enemySpawnPoint = Real3(this.Random.DieRoll(columns),this.Random.DieRoll(rows),0);
+                }
+            }
+
+            lastSpawnPoint.Add(enemySpawnPoint);
+
+            var enemy = this.Space.CreateAtPosition(Archetype.Enemy, enemySpawnPoint);
+            this.EnemyArray.Add(enemy);
+            enemy.Sprite.SpriteSource = this.EnemySkinArray[this.Random.RangeExclusiveMax(0,this.EnemySkinArray.Count)];
+            enemy.Sprite.AnimationSpeed = 0;
+        }
+    }
+    
+    function PlayerSetup(columns : Integer, rows : Integer)
+    {
+            var spawnLocations : Array[Real3] = new Array[Real3]();
+            spawnLocations.Add(Real3(0,0,0));
+            spawnLocations.Add(Real3(0,1,0));
+            spawnLocations.Add(Real3(0,2,0));
+            spawnLocations.Add(Real3(1,0,0));
+            spawnLocations.Add(Real3(2,0,0));
+            spawnLocations.Add(Real3(1,1,0));
+            spawnLocations.Add(Real3(1,2,0));
+            spawnLocations.Add(Real3(2,1,0));
+            spawnLocations.Add(Real3(2,2,0));
+
+        for(var x : Integer = 0 ; x < 3 ; ++x)
+        {
+            var randomLocation = this.Random.DieRoll(spawnLocations.Count -1);
+            var player = this.Space.CreateAtPosition(Archetype.Player,spawnLocations[randomLocation]);
+            this.PlayerArray.Add(player);
+            spawnLocations.RemoveAt(randomLocation);
+            player.Sprite.SpriteSource = this.PlayerSkinArray[this.Random.RangeExclusiveMax(0,this.PlayerSkinArray.Count)];
+            player.Sprite.AnimationSpeed = 0;
+        }
+    }
+}

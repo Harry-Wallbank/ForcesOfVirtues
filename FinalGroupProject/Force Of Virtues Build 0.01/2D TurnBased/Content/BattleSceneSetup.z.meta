@@ -1,0 +1,8 @@
+TextContent = 
+{
+	ZilchScriptBuilder = 
+	{
+		string Name = "BattleSceneSetup",
+		uint64 ResourceId = 5a59eca5b2050084,
+	},
+},

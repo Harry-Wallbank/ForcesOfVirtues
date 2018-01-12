@@ -1,0 +1,71 @@
+class CollisionScript : ZilchComponent
+{
+    var Battling : Boolean = false;
+    function Initialize(init : CogInitializer)
+    {
+        Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
+    }
+    function OnLogicUpdate(event : UpdateEvent)
+    {
+        this.Owner.PlayerMovement.Left = true;
+        this.Owner.PlayerMovement.Right = true;
+        this.Owner.PlayerMovement.Top = true;
+        this.Owner.PlayerMovement.Bottom = true;
+        foreach(var enemy in this.LevelSettings.BoardManager.EnemyArray)
+        {
+            var enemyPos = enemy.Transform.Translation;
+            if(this.Owner.Transform.Translation - Real3(1,0,0) == enemyPos && !this.Battling)
+            {
+                this.LevelSettings.BattleScriptLoader.BattleScriptEnabled = true;
+                this.LevelSettings.BattleScriptLoader.Enemy = enemy;
+                this.LevelSettings.BattleScriptLoader.Player = this.Owner;
+                this.Battling = true;
+            }
+            if(this.Owner.Transform.Translation - Real3(0,1,0) == enemyPos && !this.Battling)
+            {
+                this.LevelSettings.BattleScriptLoader.BattleScriptEnabled = true;
+                this.LevelSettings.BattleScriptLoader.Enemy = enemy;
+                this.LevelSettings.BattleScriptLoader.Player = this.Owner;
+                this.Battling = true;
+            }
+            if(this.Owner.Transform.Translation + Real3(1,0,0) == enemyPos && !this.Battling)
+            {
+                this.LevelSettings.BattleScriptLoader.BattleScriptEnabled = true;
+                this.LevelSettings.BattleScriptLoader.Enemy = enemy;
+                this.LevelSettings.BattleScriptLoader.Player = this.Owner;
+                this.Battling = true;
+            }
+            if(this.Owner.Transform.Translation + Real3(0,1,0) == enemyPos && !this.Battling)
+            {
+                this.LevelSettings.BattleScriptLoader.BattleScriptEnabled = true;
+                this.LevelSettings.BattleScriptLoader.Enemy = enemy;
+                this.LevelSettings.BattleScriptLoader.Player = this.Owner;
+                this.Battling = true;
+            }
+        }
+        foreach(var player in this.LevelSettings.BoardManager.PlayerArray)
+        {
+            var playerPos = player.Transform.Translation;
+            if(this.Owner.Transform.Translation - Real3(1,0,0) == playerPos)
+                this.Owner.PlayerMovement.Left = false;
+            if(this.Owner.Transform.Translation + Real3(1,0,0) == playerPos)
+                this.Owner.PlayerMovement.Right = false;
+            if(this.Owner.Transform.Translation - Real3(0,1,0) == playerPos)
+                this.Owner.PlayerMovement.Bottom = false;
+            if(this.Owner.Transform.Translation + Real3(0,1,0) == playerPos)
+                this.Owner.PlayerMovement.Top = false;
+        }
+        foreach(var wall in this.LevelSettings.BoardManager.WallArray)
+        {
+            var wallPos = wall.Transform.Translation;
+            if(this.Owner.Transform.Translation - Real3(1,0,0) == wallPos)
+                this.Owner.PlayerMovement.Left = false;
+            if(this.Owner.Transform.Translation + Real3(1,0,0) == wallPos)
+                this.Owner.PlayerMovement.Right = false;
+            if(this.Owner.Transform.Translation - Real3(0,1,0) == wallPos)
+                this.Owner.PlayerMovement.Bottom = false;
+            if(this.Owner.Transform.Translation + Real3(0,1,0) == wallPos)
+                this.Owner.PlayerMovement.Top = false;
+        }
+    }
+}

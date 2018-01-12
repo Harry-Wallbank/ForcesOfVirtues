@@ -1,0 +1,47 @@
+class CollisionScript : ZilchComponent
+{
+    var Left : Boolean;
+    var Top : Boolean;
+    var Right : Boolean;
+    var Bottom : Boolean;
+    function Initialize(init : CogInitializer)
+    {
+        if(this.Owner.Name == "Left")
+            this.Left = true;
+        if(this.Owner.Name == "Top")
+            this.Top = true;
+        if(this.Owner.Name == "Right")
+            this.Right = true;
+        if(this.Owner.Name == "Bottom")
+            this.Bottom = true;
+
+        Zero.Connect(this.Owner, Events.CollisionPersisted, this.OnCollisionStarted);
+        Zero.Connect(this.Owner, Events.CollisionEnded, this.OnCollisionEnded);
+    }
+    function OnCollisionStarted(event : CollisionEvent)
+    {
+        if(event.OtherObject.Name == "Wall" || event.OtherObject.Name == "Enemy" || event.OtherObject.Name == "Player")
+        {
+            if(this.Left)
+                this.Owner.Parent.PlayerMovement.Left = !this.Left;
+            if(this.Top)
+                this.Owner.Parent.PlayerMovement.Top = !this.Top;
+            if(this.Right)
+                this.Owner.Parent.PlayerMovement.Right = !this.Right;
+            if(this.Bottom)
+                this.Owner.Parent.PlayerMovement.Bottom = !this.Bottom;
+        }
+    }
+    function OnCollisionEnded(event : CollisionEvent)
+    {
+            if(this.Left)
+                this.Owner.Parent.PlayerMovement.Left = this.Left;
+            if(this.Top)
+                this.Owner.Parent.PlayerMovement.Top = this.Top;
+            if(this.Right)
+                this.Owner.Parent.PlayerMovement.Right = this.Right;
+            if(this.Bottom)
+                this.Owner.Parent.PlayerMovement.Bottom = this.Bottom;
+            
+    }
+}

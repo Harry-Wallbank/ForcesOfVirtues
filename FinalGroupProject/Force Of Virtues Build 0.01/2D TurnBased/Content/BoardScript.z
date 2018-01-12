@@ -1,0 +1,68 @@
+class BoardScript : ZilchComponent
+{
+    [Property]
+    var Columns : Integer;
+    
+    [Property]
+    var Rows : Integer;
+    
+    var Random : Random = Random();
+    var PlayerArray : Array[SpriteSource] = new Array[SpriteSource]();
+    var EnemyArray : Array[SpriteSource] = new Array[SpriteSource]();
+    
+    function Initialize(init : CogInitializer)
+    {
+        this.PlayerArray.Add(SpriteSource.Love);
+        this.PlayerArray.Add(SpriteSource.Robot);
+        this.EnemyArray.Add(SpriteSource.EnemyRobot);
+        this.EnemyArray.Add(SpriteSource.Hate);
+        this.BoardSetup(this.Columns, this.Rows);
+    }
+    
+    function BoardSetup (columns : Integer, rows : Integer)
+    {
+        //Camera Setup
+        var camera = this.Space.FindFirstObjectByName("Camera");
+        
+        if(columns %2 != 0)
+            camera.Transform.Translation = Real3(columns/2, rows/2, 40);
+        
+        else
+            camera.Transform.Translation = Real3(columns/2 -0.5, rows/2 -0.5, 40);
+        
+        camera.Camera.Size = columns +1;
+        
+        //Board Setup
+        for(var x : Integer = -1; x<= columns ; ++x)
+        {
+            for(var y : Integer = -1; y<= rows ; ++y)
+            {
+                if(x == -1 || x == columns || y ==-1 || y == rows)
+                    this.Space.CreateAtPosition(Archetype.OuterWall, Real3(x,y,0));
+                else
+                    this.Space.CreateAtPosition(Archetype.Floor, Real3(x,y,-1));
+            }
+        }
+        //Exit Sign
+        this.Space.CreateAtPosition(Archetype.Exit, Real3(this.Columns-1,this.Rows-1,0));
+        
+        //Enemy Spawner
+        for(var x :Integer = 0 ; x< 1; ++x)
+        {
+            var enemy = this.Space.CreateAtPosition(Archetype.Enemy, Real3(this.Random.DieRoll(columns - 1), this.Random.DieRoll(rows -1),0));
+            enemy;
+            enemy.Sprite.SpriteSource = this.EnemyArray[this.Random.DieRoll(this.EnemyArray.Count -1)];
+            enemy.Sprite.AnimationSpeed = 0;
+            ++ExitScript.Enemies;
+        }
+        
+        //Player Spawner
+        for(var x : Integer = 0 ; x< 1;++x)
+        {
+            var player = this.Space.CreateAtPosition(Archetype.Player, Real3(0,0,0));
+            player;
+            player.Sprite.SpriteSource = this.PlayerArray[this.Random.DieRoll(this.PlayerArray.Count-1)];
+            player.Sprite.AnimationSpeed = 0;
+        }
+    }
+}
