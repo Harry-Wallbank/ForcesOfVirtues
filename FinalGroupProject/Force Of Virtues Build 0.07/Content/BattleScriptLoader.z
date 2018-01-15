@@ -41,8 +41,6 @@ class BattleScriptLoader : ZilchComponent
         {
             this.TimerBool = true;
             this.BattleStart(event.Dt);
-            PlayerMovement.Battling = false;
-            EnemyScript.Battling = false;
         }
     }
     
@@ -63,18 +61,25 @@ class BattleScriptLoader : ZilchComponent
                 this.Enemy.Destroy();
                 this.Player.Transform.Translation = this.PlayerBoardPos;
                 this.Player.Sprite.AnimationSpeed = 0;
+                this.Player.Sprite.CurrentFrame = 0;
+                this.Player.CollisionScript.Battling = false;
                 this.Camera.Transform.Translation = this.CameraBoardPos;
                 this.Camera.Camera.Size = 10;
                 this.LevelSettings.BoardManager.EnemyArray.RemoveFirst(this.Enemy);
+                PlayerMovement.Battling = false;
+                EnemyScript.Battling = false;
             }
             if(enemyWin)
             {
                 this.Player.Destroy();
                 this.Enemy.Transform.Translation = this.PlayerBoardPos;
                 this.Enemy.Sprite.AnimationSpeed = 0;
+                this.Enemy.Sprite.CurrentFrame = 0;
                 this.Camera.Transform.Translation = this.CameraBoardPos;
                 this.Camera.Camera.Size = 10;
                 this.LevelSettings.BoardManager.PlayerArray.RemoveFirst(this.Player);
+                PlayerMovement.Battling = false;
+                EnemyScript.Battling = false;
             }
             this.TimerBool = false;
             this.Battle = false; 
@@ -95,7 +100,8 @@ class BattleScriptLoader : ZilchComponent
         this.Enemy.Transform.Translation = Real3(23,0,0);
         this.Enemy.Sprite.AnimationSpeed = 0.2;
         
-        this.Space.CreateAtPosition(Archetype.Floor, Real3(25,0,-1));
+        var background = this.Space.CreateAtPosition(Archetype.Floor, Real3(25,0,-1));
+        background.Sprite.SpriteSource = SpriteSource.Gameimage;
         this.BattleScriptEnabled = false;
     }
 }

@@ -13,4 +13,7 @@ Build 0.05
 	Started working on the battle system (works unless time is put on it)
 Build 0.06
 	Battle system finished MVP done
+Build 0.07
+	Fixed bug to where the battle wouldnt initiate with the battlestartupscript
+	Fixed bug to where you could hit space and end your turn in the battle and make the enemy move toward you in the battle phase
 	

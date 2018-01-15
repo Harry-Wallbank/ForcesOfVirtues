@@ -16,28 +16,28 @@ class CollisionScript : ZilchComponent
             if(enemy != null)
             {
                 var enemyPos = enemy.Transform.Translation;
-                if(this.Owner.Transform.Translation - Real3(1,0,0) == enemyPos && !this.Battling)
+                if(Math.Distance((this.Owner.Transform.Translation - Real3(1,0,0)), enemyPos) < 0.01 && !this.Battling)
                 {
                     this.LevelSettings.BattleScriptLoader.BattleScriptEnabled = true;
                     this.LevelSettings.BattleScriptLoader.Enemy = enemy;
                     this.LevelSettings.BattleScriptLoader.Player = this.Owner;
                     this.Battling = true;
                 }
-                if(this.Owner.Transform.Translation - Real3(0,1,0) == enemyPos && !this.Battling)
+                if(Math.Distance((this.Owner.Transform.Translation - Real3(0,1,0)), enemyPos) < 0.01 && !this.Battling)
                 {
                     this.LevelSettings.BattleScriptLoader.BattleScriptEnabled = true;
                     this.LevelSettings.BattleScriptLoader.Enemy = enemy;
                     this.LevelSettings.BattleScriptLoader.Player = this.Owner;
                     this.Battling = true;
                 }
-                if(this.Owner.Transform.Translation + Real3(1,0,0) == enemyPos && !this.Battling)
+                if(Math.Distance((this.Owner.Transform.Translation + Real3(1,0,0)), enemyPos) < 0.01 && !this.Battling)
                 {
                     this.LevelSettings.BattleScriptLoader.BattleScriptEnabled = true;
                     this.LevelSettings.BattleScriptLoader.Enemy = enemy;
                     this.LevelSettings.BattleScriptLoader.Player = this.Owner;
                     this.Battling = true;
                 }
-                if(this.Owner.Transform.Translation + Real3(0,1,0) == enemyPos && !this.Battling)
+                if(Math.Distance((this.Owner.Transform.Translation + Real3(0,1,0)), enemyPos)  < 0.01 && !this.Battling)
                 {
                     this.LevelSettings.BattleScriptLoader.BattleScriptEnabled = true;
                     this.LevelSettings.BattleScriptLoader.Enemy = enemy;
@@ -72,6 +72,10 @@ class CollisionScript : ZilchComponent
                 this.Owner.PlayerMovement.Bottom = false;
             if(this.Owner.Transform.Translation + Real3(0,1,0) == wallPos)
                 this.Owner.PlayerMovement.Top = false;
+        }
+        if(this.Owner.Transform.Translation == Real3(this.LevelSettings.BoardManager.Columns -1,this.LevelSettings.BoardManager.Rows -1,0))
+        {
+            this.Space.LoadLevel(Level.BrokenBunnySplash);
         }
     }
 }
