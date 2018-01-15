@@ -1,0 +1,7 @@
+ContentLibrary = 
+{
+	string Name = "NewSpace",
+	uint64 LibraryId = 5a3d83349aedf184,
+	string SourceControlType = "",
+	bool ReadOnly = false,
+},
