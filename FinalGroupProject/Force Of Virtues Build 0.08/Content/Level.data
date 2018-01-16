@@ -93,7 +93,7 @@ Level =
 		},
 		BoardManager = 
 		{
-			int Columns = 9,
+			int Columns = 11,
 			int Rows = 9,
 		},
 		BattleScriptLoader = 
@@ -127,7 +127,7 @@ Level =
 		},
 		Transform = 
 		{
-			Vec3 Translation = [0, 0, 50],
+			Vec3 Translation = [-3.9638567, 3.80353498, 50],
 			Vec3 Scale = [1, 1, 1],
 			Quat Rotation = [-0, -1.09278471e-08, 0, 1],
 		},
@@ -139,7 +139,7 @@ Level =
 			float FieldOfView = 45,
 			float NearPlane = 0.5,
 			float FarPlane = 500,
-			float Size = 20,
+			float Size = 14.7781153,
 		},
 		EditorCameraController = 
 		{
@@ -147,7 +147,7 @@ Level =
 			float LookDistance = 50,
 			float VerticalAngle = 0,
 			float HorizontalAngle = 0,
-			Vec3 LookTarget = [0, 0, 0],
+			Vec3 LookTarget = [-3.9638567, 3.80353498, -1.58677267e-07],
 			float MoveSensitivity = 1,
 		},
 		EditorRenderer = 

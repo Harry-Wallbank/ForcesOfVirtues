@@ -15,6 +15,7 @@ class BoardManager : ZilchComponent
     
     function Initialize(init : CogInitializer)
     {
+        this.Space.CreateAtPosition(Archetype.Map,Real3(this.Columns /2,this.Rows /2,-1));
         this.PlayerSkinArray.Add(SpriteSource.PlayerHeartAnimation);
         this.PlayerSkinArray.Add(SpriteSource.PlayerRobotAnimation);
         this.EnemySkinArray.Add(SpriteSource.EnemyHateAnimation);

@@ -16,4 +16,8 @@ Build 0.06
 Build 0.07
 	Fixed bug to where the battle wouldnt initiate with the battlestartupscript
 	Fixed bug to where you could hit space and end your turn in the battle and make the enemy move toward you in the battle phase
-	
+Build 0.08
+	Reworked battling so that the player has more decision making with having the players and enemys assigned numbers to each side
+	Fixed a bug where the Numbers would all be 1's
+	Added background art instead of the grass blackholder
+Build 0.09
