@@ -4,13 +4,4 @@ class EnemyNum : ZilchComponent
     var RightNum : Integer;
     var TopNum : Integer;
     var BottomNum : Integer;
-    
-    var RandomGen : Random = new Random();
-    function Initialize(init : CogInitializer)
-    {
-        this.LeftNum = this.RandomGen.DieRoll(10);
-        this.RightNum = this.RandomGen.DieRoll(10);
-        this.TopNum = this.RandomGen.DieRoll(10);
-        this.BottomNum = this.RandomGen.DieRoll(10);
-    }
 }

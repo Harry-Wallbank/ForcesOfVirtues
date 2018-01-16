@@ -15,7 +15,6 @@ class BoardManager : ZilchComponent
     
     function Initialize(init : CogInitializer)
     {
-        this.Space.CreateAtPosition(Archetype.Map,Real3(this.Columns /2,this.Rows /2,-1));
         this.PlayerSkinArray.Add(SpriteSource.PlayerHeartAnimation);
         this.PlayerSkinArray.Add(SpriteSource.PlayerRobotAnimation);
         this.EnemySkinArray.Add(SpriteSource.EnemyHateAnimation);
@@ -79,6 +78,20 @@ class BoardManager : ZilchComponent
             enemy.ID.ID = x ;
             enemy.Sprite.SpriteSource = this.EnemySkinArray[this.Random.RangeExclusiveMax(0,this.EnemySkinArray.Count)];
             enemy.Sprite.AnimationSpeed = 0;
+            if(enemy.Sprite.SpriteSource == SpriteSource.EnemyHateAnimation)
+            {
+                enemy.EnemyNum.LeftNum = 2;
+                enemy.EnemyNum.RightNum = 7;
+                enemy.EnemyNum.BottomNum = 6;
+                enemy.EnemyNum.TopNum = 3;
+            }
+            else if(enemy.Sprite.SpriteSource == SpriteSource.EnemyRobotAnimation)
+            {
+                enemy.EnemyNum.LeftNum = 3;
+                enemy.EnemyNum.RightNum = 4;
+                enemy.EnemyNum.BottomNum = 2;
+                enemy.EnemyNum.TopNum = 7;
+            }
         }
     }
     
@@ -104,6 +117,20 @@ class BoardManager : ZilchComponent
             player.Sprite.SpriteSource = this.PlayerSkinArray[this.Random.RangeExclusiveMax(0,this.PlayerSkinArray.Count)];
             player.Sprite.AnimationSpeed = 0;
             player.ID.ID = x;
+            if(player.Sprite.SpriteSource == SpriteSource.PlayerHeartAnimation)
+            {
+                player.CollisionScript.LeftNum = 2;
+                player.CollisionScript.RightNum = 7;
+                player.CollisionScript.BottomNum = 6;
+                player.CollisionScript.TopNum = 3;
+            }
+            else if(player.Sprite.SpriteSource == SpriteSource.PlayerRobotAnimation)
+            {
+                player.CollisionScript.LeftNum = 3;
+                player.CollisionScript.RightNum = 4;
+                player.CollisionScript.BottomNum = 2;
+                player.CollisionScript.TopNum = 7;
+            }
         }
     }
 }

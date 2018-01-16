@@ -2,19 +2,13 @@ class CollisionScript : ZilchComponent
 {
     var Battling : Boolean = false;
     
-    var LeftNum : Integer;
-    var RightNum : Integer;
-    var TopNum : Integer;
-    var BottomNum : Integer;
-    
-    var RandomGen : Random = new Random();
+    var LeftNum : Integer = 0;
+    var RightNum : Integer = 0;
+    var TopNum : Integer = 0;
+    var BottomNum : Integer = 0;
     
     function Initialize(init : CogInitializer)
     {
-        this.LeftNum = this.RandomGen.DieRoll(10);
-        this.RightNum = this.RandomGen.DieRoll(10);
-        this.TopNum = this.RandomGen.DieRoll(10);
-        this.BottomNum = this.RandomGen.DieRoll(10);
         Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
     }
     function OnLogicUpdate(event : UpdateEvent)

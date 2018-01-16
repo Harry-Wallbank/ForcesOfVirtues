@@ -21,3 +21,5 @@ Build 0.08
 	Fixed a bug where the Numbers would all be 1's
 	Added background art instead of the grass blackholder
 Build 0.09
+	Reworked the battling so that the numbers werent random and that they were set dependant between the characters
+	fixed a bug to where the battling scene would stay in an infinate loop when the numbers were the same
