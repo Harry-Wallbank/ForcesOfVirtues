@@ -10,9 +10,11 @@ class BattleScriptLoader : ZilchComponent
     
     var Player : Cog = null;
     var PlayerBoardPos : Real3;
+    var PlayerFlipX : Boolean;
     
     var Enemy : Cog = null;
     var EnemyBoardPos : Real3;
+    var EnemyFlipX : Boolean;
     
     var BattleScriptEnabled : Boolean = false;
     
@@ -97,6 +99,7 @@ class BattleScriptLoader : ZilchComponent
                 this.EnemyRightNum = 0;
                 this.EnemyTopNum = 0;
                 this.EnemyBottomNum = 0;
+                this.Player.Sprite.FlipX = this.PlayerFlipX;
             }
             if(enemyWin)
             {
@@ -118,6 +121,7 @@ class BattleScriptLoader : ZilchComponent
                 this.EnemyRightNum = 0;
                 this.EnemyTopNum = 0;
                 this.EnemyBottomNum = 0;
+                this.Enemy.Sprite.FlipX = this.EnemyFlipX;
             }
             this.TimerBool = false;
             this.Battle = false; 
@@ -132,11 +136,15 @@ class BattleScriptLoader : ZilchComponent
         
         this.PlayerBoardPos = this.Player.Transform.Translation;
         this.Player.Transform.Translation = Real3(27,0,0);
-        this.Player.Sprite.AnimationSpeed = 0.2;
+        this.Player.Sprite.AnimationSpeed = 1;
+        this.PlayerFlipX = this.Player.Sprite.FlipX;
+        this.Player.Sprite.FlipX = false;
         
         this.EnemyBoardPos = this.Enemy.Transform.Translation;
         this.Enemy.Transform.Translation = Real3(23,0,0);
-        this.Enemy.Sprite.AnimationSpeed = 0.2;
+        this.Enemy.Sprite.AnimationSpeed = 1;
+        this.EnemyFlipX = this.Enemy.Sprite.FlipX;
+        this.Enemy.Sprite.FlipX = false;
         
         var background = this.Space.CreateAtPosition(Archetype.Floor, Real3(25,0,-1));
         background.Sprite.SpriteSource = SpriteSource.Gameimage;
