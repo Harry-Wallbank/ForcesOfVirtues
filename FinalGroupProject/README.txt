@@ -23,3 +23,7 @@ Build 0.08
 Build 0.09
 	Reworked the battling so that the numbers werent random and that they were set dependant between the characters
 	fixed a bug to where the battling scene would stay in an infinate loop when the numbers were the same
+Build 0.11
+	brought back random battle starts except they cant be the same number on any of sides\
+	enemies have a lower chance of colliding with eachother
+	

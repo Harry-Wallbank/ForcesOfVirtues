@@ -1,0 +1,7 @@
+class EnemyNum : ZilchComponent
+{
+    var LeftNum : Integer;
+    var RightNum : Integer;
+    var TopNum : Integer;
+    var BottomNum : Integer;
+}

@@ -4,6 +4,10 @@ class EnemyScript : ZilchComponent
     var EnemyTurn : Boolean;
     [Static]
     var Battling : Boolean;
+    var EnemyCanMoveLeft : Boolean = true;
+    var EnemyCanMoveRight : Boolean = true;
+    var EnemyCanMoveTop : Boolean = true;
+    var EnemyCanMoveBottom : Boolean = true;
     
     function Initialize(init : CogInitializer)
     {
@@ -37,20 +41,28 @@ class EnemyScript : ZilchComponent
     
     function EnemyMovemement()
     {
-        var movedir = Real3(0,0,0);
-        movedir = this.FindClosestPlayer();
-        
-        if(movedir.X > 4 || movedir.Y > 4 || movedir.X < -4 || movedir.Y < -4)
-        {
+            var movedir = Real3(0,0,0);
+            movedir = this.FindClosestPlayer();
+            
+            if(movedir.X > 4 || movedir.Y > 4 || movedir.X < -4 || movedir.Y < -4)
+            {
+                this.EnemyTurn = false;
+                return;
+            }
+            movedir = Math.Normalize(movedir);
+            movedir = Math.Round(movedir);
+            
+            if(this.EnemyCanMoveLeft && movedir == Real3(-1,0,0))
+                this.Owner.Transform.Translation += movedir;
+            if(this.EnemyCanMoveRight && movedir == Real3(1,0,0))
+                this.Owner.Transform.Translation += movedir;
+            if(this.EnemyCanMoveTop && movedir == Real3(0,1,0))
+                this.Owner.Transform.Translation += movedir;
+            if(this.EnemyCanMoveBottom && movedir == Real3(0,-1,0))
+                this.Owner.Transform.Translation += movedir;
+
             this.EnemyTurn = false;
             return;
-        }
-        movedir = Math.Normalize(movedir);
-        movedir = Math.Round(movedir);
-        
-        this.Owner.Transform.Translation += movedir;
-        this.EnemyTurn = false;
-        return;
     }
     
     function FindClosestPlayer () : Real3

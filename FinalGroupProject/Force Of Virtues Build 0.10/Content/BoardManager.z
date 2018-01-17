@@ -58,7 +58,8 @@ class BoardManager : ZilchComponent
     function EnemySetup(columns : Integer, rows : Integer)
     {
         var lastSpawnPoint : Array[Real3] = new Array[Real3]();
-        for(var x : Integer = 0 ; x < 3 ; ++x)
+        var numbers : Real4 = Real4(0,0,0,0);
+        for(var x : Integer = 0 ; x < 6 ; ++x)
         {
             var enemySpawnPoint = Real3(this.Random.DieRoll(columns -1),this.Random.DieRoll(rows -1),0);
 
@@ -79,20 +80,11 @@ class BoardManager : ZilchComponent
             enemy.ID.ID = x ;
             enemy.Sprite.SpriteSource = this.EnemySkinArray[this.Random.RangeExclusiveMax(0,this.EnemySkinArray.Count)];
             enemy.Sprite.AnimationSpeed = 0;
-            if(enemy.Sprite.SpriteSource == SpriteSource.EnemyHateAnimation)
-            {
-                enemy.EnemyNum.LeftNum = 2;
-                enemy.EnemyNum.RightNum = 7;
-                enemy.EnemyNum.BottomNum = 6;
-                enemy.EnemyNum.TopNum = 3;
-            }
-            else if(enemy.Sprite.SpriteSource == SpriteSource.EnemyRobotAnimation)
-            {
-                enemy.EnemyNum.LeftNum = 3;
-                enemy.EnemyNum.RightNum = 4;
-                enemy.EnemyNum.BottomNum = 2;
-                enemy.EnemyNum.TopNum = 7;
-            }
+            numbers = this.RandomNumberGen(numbers);
+            enemy.EnemyNum.LeftNum = numbers.X as Integer;
+            enemy.EnemyNum.RightNum = numbers.Y as Integer;
+            enemy.EnemyNum.BottomNum = numbers.Z as Integer;
+            enemy.EnemyNum.TopNum = numbers.W as Integer;
         }
     }
     
@@ -109,6 +101,7 @@ class BoardManager : ZilchComponent
             spawnLocations.Add(Real3(2,1,0));
             spawnLocations.Add(Real3(2,2,0));
 
+        var numbers : Real4 = Real4(0,0,0,0);
         for(var x : Integer = 0 ; x < 3 ; ++x)
         {
             var randomLocation = this.Random.DieRoll(spawnLocations.Count -1);
@@ -118,20 +111,37 @@ class BoardManager : ZilchComponent
             player.Sprite.SpriteSource = this.PlayerSkinArray[this.Random.RangeExclusiveMax(0,this.PlayerSkinArray.Count)];
             player.Sprite.AnimationSpeed = 0;
             player.ID.ID = x;
-            if(player.Sprite.SpriteSource == SpriteSource.PlayerHeartAnimation)
-            {
-                player.CollisionScript.LeftNum = 2;
-                player.CollisionScript.RightNum = 7;
-                player.CollisionScript.BottomNum = 6;
-                player.CollisionScript.TopNum = 3;
-            }
-            else if(player.Sprite.SpriteSource == SpriteSource.PlayerRobotAnimation)
-            {
-                player.CollisionScript.LeftNum = 3;
-                player.CollisionScript.RightNum = 4;
-                player.CollisionScript.BottomNum = 2;
-                player.CollisionScript.TopNum = 7;
-            }
+            numbers = this.RandomNumberGen(numbers);
+            player.CollisionScript.LeftNum = numbers.X as Integer;
+            player.CollisionScript.RightNum = numbers.Y as Integer;
+            player.CollisionScript.BottomNum = numbers.Z as Integer;
+            player.CollisionScript.TopNum = numbers.W as Integer;
         }
+    }
+    
+    function RandomNumberGen(lastNum : Real4) : Real4
+    {
+        var randomNum : Random = new Random();
+        var num : Real4 = Real4(0,0,0,0);
+        if(num == lastNum || num == Real4(0,0,0,0))
+        {
+            num = Real4(randomNum.DieRoll(10),randomNum.DieRoll(10),randomNum.DieRoll(10),randomNum.DieRoll(10));
+        }
+        while(num.X == lastNum.X || num.X == num.Y || num.X == num.Z || num.X == num.W
+         || num.Y == lastNum.Y || num.Y == num.X || num.Y == num.Z || num.Y == num.W
+         || num.Z == lastNum.Z || num.Z == num.X || num.Z == num.Y || num.Z == num.W
+         || num.W == lastNum.W || num.W == num.X || num.W == num.Z || num.W == num.Y)
+        {
+            if(num.W == lastNum.W || num.W == num.X || num.W == num.Z || num.W == num.Y)
+                num.W = randomNum.DieRoll(10);
+            if(num.Z == lastNum.Z || num.Z == num.X || num.Z == num.Y || num.Z == num.W)
+                num.Z = randomNum.DieRoll(10);
+            if(num.Y == lastNum.Y || num.Y == num.X || num.Y == num.Z || num.Y == num.W)
+                num.Y = randomNum.DieRoll(10);
+            if(num.X == lastNum.X || num.X == num.Y || num.X == num.Z || num.X == num.W)
+                num.X = randomNum.DieRoll(10);
+        }
+        
+        return num;
     }
 }

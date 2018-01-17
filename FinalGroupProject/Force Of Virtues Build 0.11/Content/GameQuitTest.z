@@ -1,0 +1,27 @@
+class GameQuitTest : ZilchComponent
+{
+    [Property]
+    var ApplyQuit : Boolean = false;
+
+    function Initialize(init : CogInitializer)
+    {
+        Zero.Connect(this.GameSession, Events.GameRequestQuit, this.OnGameRequestQuit);
+    }
+
+    function OnGameRequestQuit(event : GameEvent)
+    {
+        event.Handled = true;
+        if(this.ApplyQuit)
+        {
+            event.Game.Quit();
+        }
+        else
+        {
+            var spaces = this.GameSession.AllSpaces;
+            foreach (var space in spaces)
+            {
+                space.TimeSpace.TogglePause();
+            }
+        }
+    }
+}
