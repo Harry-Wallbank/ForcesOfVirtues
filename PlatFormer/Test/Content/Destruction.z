@@ -1,0 +1,28 @@
+class Destruction : ZilchComponent
+{
+    [Property]
+    var Obj : CogPath;
+    [Property]
+    var Sprite : CogPath;
+    [Property]
+    var Door1 : CogPath;
+    var Door : Cog = null;
+    function Initialize(init : CogInitializer)
+    {
+        this.Door = this.Door1.Cog;
+        Zero.Connect(this.Owner, Events.CollisionStarted, this.OnCollisionStarted);
+    }
+
+    function OnCollisionStarted(event : CollisionEvent)
+    {
+        if(event.OtherObject == this.Obj.Cog)
+        {
+                this.Sprite.Cog.Sprite.Visible = true;
+                this.Owner.Destroy();
+                if(this.Door != null)
+                {
+                    ++this.Door.UnlockDoor.Picture;
+                }
+        }
+    }
+}

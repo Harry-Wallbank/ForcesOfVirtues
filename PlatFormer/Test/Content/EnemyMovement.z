@@ -1,0 +1,54 @@
+class EnemyMovement : ZilchComponent
+{
+    [Property]
+    var Obj1 : CogPath;
+    [Property]
+    var Speed : Real;
+    [Property]
+    var HeightToClip : Real;
+    var FollowDistance : Real = 9.0;
+    var Touching : Boolean;
+    function Initialize(init : CogInitializer)
+    {
+        Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
+        Zero.Connect(this.Owner, Events.CollisionPersisted, this.OnCollisisonPersisted);
+        Zero.Connect(this.Owner, Events.CollisionEnded, this.OnCollisisonEnded);
+    }
+
+    function OnLogicUpdate(event : UpdateEvent)
+    {
+        var playerPosX = this.Obj1.Cog.Transform.Translation.X;
+        var enemyPosX = this.Owner.Transform.Translation.X;
+        var movement = Real3(0.0, 0.0, 0.0);
+        
+        if(this.Obj1.Cog.Transform.WorldTranslation.X < this.Owner.Transform.WorldTranslation.X && this.Obj1.Cog.Transform.WorldRotation.Y > 0.5
+        && this.Obj1.Cog.Transform.WorldTranslation.Y < this.Owner.Transform.WorldTranslation.Y + this.HeightToClip
+        && Math.Distance(this.Obj1.Cog.Transform.Translation,this.Owner.Transform.Translation) < this.FollowDistance && !this.Touching
+        || this.Obj1.Cog.Transform.WorldTranslation.X > this.Owner.Transform.WorldTranslation.X && this.Obj1.Cog.Transform.WorldRotation.Y < 0.5
+        && this.Obj1.Cog.Transform.WorldTranslation.Y > this.Owner.Transform.WorldTranslation.Y - this.HeightToClip
+        && Math.Distance(this.Obj1.Cog.Transform.Translation,this.Owner.Transform.Translation) < this.FollowDistance && !this.Touching)
+        {
+            if(playerPosX - enemyPosX > 0.1)
+            {
+                movement.X += 0.1 * this.Speed;
+                this.Owner.Sprite.FlipX = true;
+            }
+            else if(playerPosX - enemyPosX < -0.1)
+            {
+                movement.X -= 0.1 * this.Speed;
+                this.Owner.Sprite.FlipX = false;
+            }
+        }
+        this.Owner.Transform.Translation += movement* event.Dt * this.Speed;
+    }
+
+    function OnCollisisonPersisted(event : CollisionEvent)
+    {
+        this.Touching = true;
+    }
+
+    function OnCollisisonEnded(event : CollisionEvent)
+    {
+        this.Touching = false;
+    }
+}

@@ -1,0 +1,45 @@
+class PlayerMovement : ZilchComponent
+{
+    [Static]
+    var LeftMove : Keys = Keys.A;
+    [Static]
+    var RightMove : Keys = Keys.D;
+    [Static]
+    var JumpMove : Keys = Keys.Space;
+
+    var Movement : Real3 = Real3(0,0,0);
+    function Initialize(init : CogInitializer)
+    {
+        Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
+    }
+
+    function OnLogicUpdate(event : UpdateEvent)
+    {
+            this.Movement = Real3(0,0,0);
+            if(Zero.Keyboard.KeyIsDown(PlayerMovement.LeftMove))
+            {
+                this.Movement.X -= 1.0;
+                this.Owner.Transform.WorldRotation = Math.Euler(Real3(0,3.14,0));
+            }
+            
+            if(Zero.Keyboard.KeyIsDown(PlayerMovement.RightMove))
+            {
+                this.Movement.X += 1.0;
+                this.Owner.Transform.WorldRotation = Math.Euler(Real3(0,0,0));
+            }
+            
+            if(Zero.Keyboard.KeyIsDown(PlayerMovement.JumpMove))
+            {
+                this.Owner.SweptController.Jump();
+            }
+            
+            if(Zero.Keyboard.KeyIsUp(PlayerMovement.JumpMove))
+            {
+                if(this.Owner.SweptController.Jumping)
+                {
+                    this.Owner.SweptController.JumpCancel();
+                }
+            }
+            this.Owner.SweptController.Update(this.Movement, event.Dt);
+    }
+}

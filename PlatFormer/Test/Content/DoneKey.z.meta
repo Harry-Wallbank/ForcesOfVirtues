@@ -1,0 +1,8 @@
+TextContent = 
+{
+	ZilchScriptBuilder = 
+	{
+		string Name = "DoneKey",
+		uint64 ResourceId = 5a7cfda649f070c2,
+	},
+},

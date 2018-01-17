@@ -1,0 +1,22 @@
+class EnemyHealth : ZilchComponent
+{
+    [Property]
+    var TotalHealth : Integer;
+    var NowHealth : Integer;
+    [Property]
+    var SpawnCue : SoundCue = null;
+    function Initialize(init : CogInitializer)
+    {
+        this.NowHealth = this.TotalHealth;
+        Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
+    }
+
+    function OnLogicUpdate(event : UpdateEvent)
+    {
+        if(this.NowHealth <= 0)
+        {
+            this.Space.SoundSpace.PlayCue(this.SpawnCue);
+            this.Owner.Destroy();
+        }
+    }
+}

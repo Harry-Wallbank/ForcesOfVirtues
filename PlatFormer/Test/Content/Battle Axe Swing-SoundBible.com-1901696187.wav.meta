@@ -1,0 +1,11 @@
+AudioContent = 
+{
+	SoundBuilder = 
+	{
+		string Name = "Battle Axe Swing-SoundBible.com-1901696187",
+		uint64 ResourceId = 5a73ed14e0e830b1,
+		bool Compressed = false,
+		bool Streamed = false,
+		SoundLoadType LoadType = Decompress,
+	},
+},

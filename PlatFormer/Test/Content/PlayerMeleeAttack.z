@@ -1,0 +1,71 @@
+class PlayerMeleeAttack : ZilchComponent
+{
+    [Property]
+    var Obj : CogPath;
+    var MouseBool : Boolean = false;
+    var CollideBool : Boolean = false;
+    var Timer : Real;
+    var AttackingBool : Boolean = false;
+    var HitBool : Boolean = false;
+    [Property]
+    var StandingSource :SpriteSource;
+    [Property]
+    var SpawnCue : SoundCue;
+    function Initialize(init : CogInitializer)
+    {
+        Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
+        Zero.Connect(this.Owner, Events.CollisionPersisted, this.OnCollisionStarted);
+        Zero.Connect(this.Owner, Events.CollisionEnded, this.OnCollisionEnded);
+    }
+
+    function OnCollisionStarted(event : CollisionEvent)
+    {
+        if(event.OtherObject != this.Obj.Cog)
+        {
+            this.CollideBool = true;
+        }
+        if(this.HitBool)
+        {
+            --event.OtherObject.EnemyHealth.NowHealth;
+        }
+    }
+
+    function OnCollisionEnded(event : CollisionEvent)
+    {
+        this.CollideBool = false;
+    }
+
+    function OnLogicUpdate(event : UpdateEvent)
+    {
+        this.HitBool = false;
+        if(Zero.Mouse.IsButtonDown(MouseButtons.Left)&& !this.MouseBool && this.Owner.Parent.SortMachine.Bool)
+        {
+            this.MouseBool = true;
+        }
+        if(this.MouseBool)
+        {
+            this.AttackingBool = true;
+            this.Timer += event.Dt;
+            if(this.Timer >= 0.2)
+            {
+                this.Space.SoundSpace.PlayCue(this.SpawnCue);
+                if(this.CollideBool)
+                {
+                    this.HitBool = true;
+                    this.Timer = 0.0;
+                    this.MouseBool = false;
+                    this.AttackingBool = false;
+                    this.Owner.Parent.Sprite.SpriteSource = this.StandingSource;
+                }
+                else
+                {
+                    this.Timer = 0.0;
+                    this.MouseBool = false;
+                    this.AttackingBool = false;
+                    this.Owner.Parent.Sprite.SpriteSource = this.StandingSource;
+                }
+                
+            }
+        }
+    }
+}

@@ -1,0 +1,29 @@
+class TimeDestroy : ZilchComponent
+{
+    var Timer : Real;
+    [Property]
+    var CountDown : Real;
+    var Bool : Boolean = false;
+    function Initialize(init : CogInitializer)
+    {
+        Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
+        Zero.Connect(Zero.Keyboard, Events.KeyDown, this.OnKeyDown);
+    }
+
+    function OnKeyDown(event : KeyboardEvent)
+    {
+        this.Bool = true;
+    }
+
+    function OnLogicUpdate(event : UpdateEvent)
+    {
+        if(this.Bool)
+        {
+            this.Timer+= event.Dt;
+            if(this.Timer >=this.CountDown)
+            {
+                this.Owner.Destroy();
+            }
+        }
+    }
+}

@@ -1,0 +1,49 @@
+class PlayerAttack : ZilchComponent
+{
+    var CollisionBool : Boolean = false;
+    var MouseBool : Boolean = false;
+    var Timer : Real;
+    [Property]
+    var SpawnCue : SoundCue;
+    function Initialize(init : CogInitializer)
+    {
+        Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
+        Zero.Connect(this.Owner, Events.CollisionPersisted, this.OnCollisionPersisted);
+        Zero.Connect(this.Owner, Events.CollisionEnded, this.OnCollisionEnded);
+    }
+
+    function OnCollisionPersisted(event : CollisionEvent)
+    {
+        if(event.OtherObject.Name != "DefaultTile" && event.OtherObject.Name != "Paper" && this.Timer >= 0.2)
+        {
+            this.Space.SoundSpace.PlayCue(this.SpawnCue);
+            --event.OtherObject.EnemyHealth.NowHealth;
+            this.Timer = 0.0;
+            this.MouseBool = false;
+        }
+        this.CollisionBool = true;
+    }
+
+    function OnCollisionEnded(event : CollisionEvent)
+    {
+        this.CollisionBool = false;
+    }
+
+    function OnLogicUpdate(event : UpdateEvent)
+    {
+        if(Zero.Mouse.IsButtonDown(MouseButtons.Left))
+        {
+            this.MouseBool = true;
+        }
+        if(this.MouseBool)
+        {
+            this.Timer +=event.Dt;
+        }
+        if(this.Timer >= 0.2 && !this.CollisionBool)
+        {
+            this.Space.SoundSpace.PlayCue(this.SpawnCue);
+            this.Timer = 0.0;
+            this.MouseBool = false;
+        }
+    }
+}

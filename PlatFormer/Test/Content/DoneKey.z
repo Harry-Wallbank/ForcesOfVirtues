@@ -1,0 +1,29 @@
+class DoneKey : ZilchComponent
+{
+    var Timer : Real;
+    [Property]
+    var Level : Level;
+    var Bool : Boolean;
+    function Initialize(init : CogInitializer)
+    {
+        Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
+        Zero.Connect(Zero.Keyboard, Events.KeyDown, this.OnKeyDown);
+    }
+
+    function OnKeyDown(event : KeyboardEvent)
+    {
+        this.Bool = true;
+    }
+
+    function OnLogicUpdate(event : UpdateEvent)
+    {
+        if(this.Bool)
+        {
+            this.Timer += event.Dt;
+        }
+        if(this.Timer>= 1.0)
+        {
+            this.Space.LoadLevel(this.Level);
+        }
+    }
+}

@@ -1,0 +1,51 @@
+class PersistentSound : ZilchComponent
+{
+    [Property]
+    var BackgroundMenuMusic : SoundCue;
+
+    [Property]
+    var BackgroundGameMusic : SoundCue;
+
+    [Property]
+    var BackgroundMusicSpaceArch : Archetype;
+
+    [Property]
+    var MusicLevel : Level = null;
+
+    var BackgroundMenuMusicSpace : Space;
+
+    var BackgroundGameMusicSpace : Space;
+    function Initialize(init : CogInitializer)
+    {
+        Zero.Connect(this.Space, Events.LevelStarted, this.OnLevelStarted);
+    }
+
+    function OnLevelStarted(event : GameEvent)
+    {
+        if(event.LevelName == "GameLevel")
+        {
+            if(this.BackgroundMenuMusicSpace != null)
+            {
+                this.BackgroundMenuMusicSpace.Destroy();
+            }
+            if(this.BackgroundGameMusicSpace != null)
+            {
+                this.BackgroundGameMusicSpace.Destroy();
+            } 
+            else if(event.LevelName == "Level")
+            {
+                if(this.BackgroundGameMusicSpace != null)
+                {
+                    this.BackgroundGameMusicSpace.Destroy();
+                }
+                if(this.BackgroundMenuMusicSpace == null)
+                {
+                    this.BackgroundMenuMusicSpace = this.GameSession.CreateSpace(this.BackgroundMusicSpaceArch);
+                    this.BackgroundMenuMusicSpace.SoundSpace.PlayCue(this.BackgroundMenuMusic);
+                }
+            }
+        }
+        this.BackgroundGameMusicSpace = this.GameSession.CreateSpace(this.BackgroundMusicSpaceArch);
+        this.BackgroundGameMusicSpace.SoundSpace.PlayCue(this.BackgroundGameMusic);
+    }
+}

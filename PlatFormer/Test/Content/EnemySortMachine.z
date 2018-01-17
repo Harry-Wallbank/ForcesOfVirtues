@@ -1,0 +1,29 @@
+class EnemySortMachine : ZilchComponent
+{
+    [Property]
+    var Standing : SpriteSource;
+    [Property]
+    var Attack : SpriteSource;
+    function Initialize(init : CogInitializer)
+    {
+        Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
+    }
+
+    function OnLogicUpdate(event : UpdateEvent)
+    {
+        if(this.Owner.Sprite.SpriteSource == this.Standing)
+        {
+            if(this.Owner.EnemyMeleeAttack.Bool)
+            {
+                this.Owner.Sprite.SpriteSource = this.Attack;
+            }
+        }
+        if(this.Owner.Sprite.SpriteSource == this.Attack)
+        {
+            if(!this.Owner.EnemyMeleeAttack.Bool)
+            {
+                this.Owner.Sprite.SpriteSource = this.Standing;
+            }
+        }
+    }
+}

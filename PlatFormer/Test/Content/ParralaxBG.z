@@ -1,0 +1,29 @@
+class ParalaxBG : ZilchComponent
+{
+    [Property]
+    var CameraPath : CogPath = null;
+    var Camera : Cog = null;
+    
+    [Property]
+    var ParalaxAmount : Real = 2;
+    
+    [Property]
+    var X : Real = 0;
+    [Property]
+    var Y : Real = 0;
+    [Property]
+    var Z : Real = 0;
+    
+    function Initialize(init : CogInitializer)
+    {
+        this.Camera = this.CameraPath.Cog;
+        Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
+    }
+
+    function OnLogicUpdate(event : UpdateEvent)
+    {
+        var cameraPos = this.Camera.Transform.Translation;
+        cameraPos += Real3(this.X,this.Y,this.Z);
+        this.Owner.Transform.Translation = Real3(cameraPos.X/this.ParalaxAmount, this.Y/this.ParalaxAmount, this.Z);
+    }
+}

@@ -1,0 +1,23 @@
+class PlayerHealth : ZilchComponent
+{
+    [Property]
+    var TotalHealth : Integer;
+    var NowHealth : Integer;
+    [Property]
+    var HealthText : CogPath;
+    function Initialize(init : CogInitializer)
+    {
+        this.NowHealth = this.TotalHealth;
+        Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
+    }
+
+    function OnLogicUpdate(event : UpdateEvent)
+    {
+        if(this.NowHealth<= 0)
+        {
+            this.Owner.Transform.WorldTranslation = Real3(-6,1,0);
+            this.NowHealth = this.TotalHealth;
+        }
+        this.HealthText.Cog.SpriteText.Text = ("Lives : `this.NowHealth`");
+    }
+}

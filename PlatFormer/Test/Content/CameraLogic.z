@@ -1,0 +1,19 @@
+class CameraLogic : ZilchComponent
+{
+    [Property]
+    var Targetobject : CogPath = null;
+    function Initialize(init : CogInitializer)
+    {          
+    Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
+    }
+    
+    function OnLogicUpdate(event : UpdateEvent)
+    {
+        var newcamerapos = this.Targetobject.Cog.Transform.LocalTranslation;
+        newcamerapos.Y+=2;
+        newcamerapos.Z = this.Owner.Transform.LocalTranslation.Z;
+        this.Owner.Transform.LocalTranslation = newcamerapos;
+        if(this.Targetobject == null)
+            return;
+    }
+}

@@ -1,0 +1,8 @@
+TextContent = 
+{
+	ZilchScriptBuilder = 
+	{
+		string Name = "ParralaxBG",
+		uint64 ResourceId = 5a77e54028b63487,
+	},
+},

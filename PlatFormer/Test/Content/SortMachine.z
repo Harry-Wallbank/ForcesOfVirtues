@@ -1,0 +1,99 @@
+class SortMachine : ZilchComponent
+{
+    [Property]
+    var Jumping : SpriteSource;
+    [Property]
+    var Standing : SpriteSource;
+    [Property]
+    var Walking : SpriteSource;
+    [Property]
+    var StandAttacking : SpriteSource;
+    [Property]
+    var WalkAttacking : SpriteSource;
+    [Property]
+    var JumpAttacking : SpriteSource;
+    [Property]
+    var ColliderCogPath : CogPath;
+    var Collider : Cog;
+    var Bool : Boolean;
+    function Initialize(init : CogInitializer)
+    {
+        this.Collider = this.ColliderCogPath.Cog;
+        Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
+    }
+
+    function OnLogicUpdate(event : UpdateEvent)
+    {
+        if(this.Owner.Sprite.SpriteSource == this.Jumping)
+        {
+            if(this.Owner.SweptController.Grounded)
+            {
+                this.Owner.Sprite.SpriteSource = this.Standing;
+                this.Bool = true;
+            }
+            else if(this.Collider.PlayerAttack.MouseBool)
+            {
+                this.Owner.Sprite.SpriteSource = this.JumpAttacking;
+            }
+        }
+
+        else if(this.Owner.Sprite.SpriteSource == this.Standing)
+        {
+            if(!this.Owner.SweptController.Grounded)
+            {
+                this.Owner.Sprite.SpriteSource = this.Jumping;
+                this.Bool = true;
+            }
+            else if(this.Owner.PlayerMovement.Movement != Real3(0,0,0))
+            {
+                this.Owner.Sprite.SpriteSource = this.Walking;
+            }
+            else if(this.Collider.PlayerAttack.MouseBool)
+            {
+                this.Owner.Sprite.SpriteSource = this.StandAttacking;
+            }
+        }
+
+        else if(this.Owner.Sprite.SpriteSource == this.Walking)
+        {
+            if(this.Owner.PlayerMovement.Movement == Real3(0,0,0))
+            {
+                this.Owner.Sprite.SpriteSource = this.Standing;
+                this.Bool = true;
+            }
+            else if(!this.Owner.SweptController.Grounded)
+            {
+                this.Owner.Sprite.SpriteSource = this.Jumping;
+                this.Bool = true;
+            }
+            else if(this.Collider.PlayerAttack.MouseBool)
+            {
+                this.Owner.Sprite.SpriteSource = this.WalkAttacking;
+            }
+        }
+
+        else if(this.Owner.Sprite.SpriteSource == this.StandAttacking)
+        {
+            if(!this.Collider.PlayerAttack.MouseBool)
+            {
+                this.Owner.Sprite.SpriteSource = this.Standing;
+            }
+        }
+
+        else if(this.Owner.Sprite.SpriteSource == this.WalkAttacking)
+        {
+            if(!this.Collider.PlayerAttack.MouseBool)
+            {
+                this.Owner.Sprite.SpriteSource = this.Standing;
+            }
+        }
+
+        else if(this.Owner.Sprite.SpriteSource == this.JumpAttacking)
+        {
+            if(!this.Collider.PlayerAttack.MouseBool)
+            {
+                this.Owner.Sprite.SpriteSource = this.Jumping;
+            }
+        }
+    }
+}

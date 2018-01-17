@@ -1,0 +1,17 @@
+class PlayRandomSound : ZilchComponent
+{
+  [Property]
+  var SpawnCue : SoundCue = null;
+
+  [Property]
+  var DestroyCue : SoundCue = null;
+
+  function Initialize(init : CogInitializer)
+  {
+      Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
+  }
+  function OnLogicUpdate(event : UpdateEvent)
+  {
+    this.Space.SoundSpace.PlayCue(this.SpawnCue);
+  }
+}

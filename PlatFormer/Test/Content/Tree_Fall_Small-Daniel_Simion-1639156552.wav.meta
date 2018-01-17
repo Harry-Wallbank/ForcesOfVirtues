@@ -1,0 +1,11 @@
+AudioContent = 
+{
+	SoundBuilder = 
+	{
+		string Name = "Tree_Fall_Small-Daniel_Simion-1639156552",
+		uint64 ResourceId = 5a73ed14e0e824b7,
+		bool Compressed = false,
+		bool Streamed = false,
+		SoundLoadType LoadType = Decompress,
+	},
+},

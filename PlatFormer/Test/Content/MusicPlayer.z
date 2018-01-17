@@ -1,0 +1,9 @@
+class MusicPlayer : ZilchComponent
+{
+    [Property]
+    var BackGorundMusic : SoundCue;
+    function Initialize(init : CogInitializer)
+    {
+            this.Space.SoundSpace.PlayCue(this.BackGorundMusic);
+    }
+}

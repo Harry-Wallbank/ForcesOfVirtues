@@ -1,0 +1,8 @@
+TextContent = 
+{
+	ZilchScriptBuilder = 
+	{
+		string Name = "UnlockDoor",
+		uint64 ResourceId = 5a6b82ceb2480ac2,
+	},
+},
