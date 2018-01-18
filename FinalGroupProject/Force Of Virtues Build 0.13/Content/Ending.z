@@ -1,0 +1,17 @@
+class Ending : ZilchComponent
+{
+    var EnemiesKilled : Integer = 0;
+    var PlayersKilled : Integer = 0;
+    function Initialize(init : CogInitializer)
+    {
+        Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
+    }
+
+    function OnLogicUpdate(event : UpdateEvent)
+    {
+        if(this.EnemiesKilled >= this.LevelSettings.BoardManager.EnemyArray.Count)
+            this.Space.LoadLevel(Level.Win);
+        if(this.PlayersKilled >= this.LevelSettings.BoardManager.PlayerArray.Count)
+            this.Space.LoadLevel(Level.Lose);
+    }
+}

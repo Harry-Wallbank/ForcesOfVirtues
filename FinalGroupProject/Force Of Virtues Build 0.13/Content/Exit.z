@@ -9,7 +9,7 @@ class Exit : ZilchComponent
     {
         if(event.OtherObject.Name == "Player")
         {
-            this.Space.LoadLevel(Level.BrokenBunnySplash);
+            this.Space.LoadLevel(Level.Win);
         }
     }
 }

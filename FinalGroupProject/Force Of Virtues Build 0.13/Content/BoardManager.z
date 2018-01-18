@@ -52,7 +52,7 @@ class BoardManager : ZilchComponent
             camera.Transform.Translation = Real3(columns / 2, rows / 2, 40);
         else
             camera.Transform.Translation = Real3(columns / 2 -0.5, rows / 2 -0.5 , 40);
-        camera.Camera.Size = columns +1;
+        camera.Camera.Size = 10;
     }
     
     function EnemySetup(columns : Integer, rows : Integer)
