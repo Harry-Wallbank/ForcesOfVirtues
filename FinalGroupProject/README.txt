@@ -26,4 +26,6 @@ Build 0.09
 Build 0.11
 	brought back random battle starts except they cant be the same number on any of sides\
 	enemies have a lower chance of colliding with eachother
+Build 0.12 
+	Updated start menu and battle sequence art.
 	
