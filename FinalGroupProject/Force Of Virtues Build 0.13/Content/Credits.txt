@@ -4,14 +4,17 @@ Brad Sayers
 Co-Producer
 Harry Wallbank
 
+Art
+Isaiah Haller
+
 Programmer
 Harry Wallbank
 
+Secondary Programmer
+Brad Sayers
+
 Game Design
 Marcus Janzen
-
-Art
-Isaiah Haller
 
 Head of Moral Support
 Brad Sayers

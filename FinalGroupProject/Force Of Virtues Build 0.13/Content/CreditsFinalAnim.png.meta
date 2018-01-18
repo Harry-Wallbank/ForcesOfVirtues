@@ -2,15 +2,15 @@ ImageContent =
 {
 	SpriteSourceBuilder = 
 	{
-		string Name = "Back",
-		uint64 ResourceId = 5a3dbab2ee9a7197,
+		string Name = "CreditsFinalAnim",
+		uint64 ResourceId = 5a04750205225f2e,
 		uint64 AtlasId = 5274cf95e4a661fd,
-		uint FrameSizeX = 58,
-		uint FrameSizeY = 16,
+		uint FrameSizeX = 148,
+		uint FrameSizeY = 22,
 		uint FrameCount = 2,
 		float FrameDelay = 0.5,
-		float OriginX = 29,
-		float OriginY = 8,
+		float OriginX = 74,
+		float OriginY = 11,
 		float PixelsPerUnit = 64,
 		bool Smoothing = false,
 		bool Looping = true,

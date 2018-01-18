@@ -69,7 +69,7 @@ Level =
 		},
 		ForwardRenderer = 
 		{
-			Vec4 ClearColor = [0.155000001, 0.155000001, 0.155000001, 1],
+			Vec4 ClearColor = [0, 0, 0, 1],
 			bool DrawNonVisible = false,
 			bool DrawDebugObjects = true,
 			bool DrawEditorIcons = true,
@@ -127,7 +127,7 @@ Level =
 		},
 		Transform = 
 		{
-			Vec3 Translation = [19.8827114, 0.730104923, 48.9990005],
+			Vec3 Translation = [26.2335854, 0.403398961, 48.9990005],
 			Vec3 Scale = [1, 1, 1],
 			Quat Rotation = [-0, -1.09278471e-08, 0, 1],
 		},
@@ -139,7 +139,7 @@ Level =
 			float FieldOfView = 45,
 			float NearPlane = 0.5,
 			float FarPlane = 500,
-			float Size = 26.9274807,
+			float Size = 6.72056484,
 		},
 		EditorCameraController = 
 		{
@@ -147,7 +147,7 @@ Level =
 			float LookDistance = 50,
 			float VerticalAngle = 0,
 			float HorizontalAngle = 0,
-			Vec3 LookTarget = [19.8827114, 0.730104923, -1.0010004],
+			Vec3 LookTarget = [26.2335854, 0.403398961, -1.00100029],
 			float MoveSensitivity = 1,
 		},
 		EditorRenderer = 
@@ -204,7 +204,7 @@ Level =
 		Transform = 
 		{
 			Vec3 Translation = [25, 0, -1],
-			Vec3 Scale = [1, 1.5, 1],
+			Vec3 Scale = [7.13502932, 6.950984, 4.63398886],
 			Quat Rotation = [0, 0, 0, 1],
 		},
 		Sprite = 
@@ -217,7 +217,7 @@ Level =
 			BlendMode BlendMode = Alpha,
 			SpriteGeometryMode GeometryMode = ZPlane,
 			string SpriteLayer = "52ad5fa30d7fcd50:DefaultSpriteLayer",
-			string SpriteSource = "5a398ebc835e561f:Gameimage",
+			string SpriteSource = "5a047dccc44b30d0:Gameimage",
 			bool RenderMask = false,
 			bool FlipX = false,
 			bool FlipY = false,

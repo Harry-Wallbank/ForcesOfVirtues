@@ -2,15 +2,15 @@ ImageContent =
 {
 	SpriteSourceBuilder = 
 	{
-		string Name = "Play",
-		uint64 ResourceId = 5a3dad8f19d9e57e,
+		string Name = "Controls Final Anim",
+		uint64 ResourceId = 5a047709a0510238,
 		uint64 AtlasId = 5274cf95e4a661fd,
-		uint FrameSizeX = 58,
-		uint FrameSizeY = 16,
+		uint FrameSizeX = 188,
+		uint FrameSizeY = 22,
 		uint FrameCount = 2,
 		float FrameDelay = 0.5,
-		float OriginX = 29,
-		float OriginY = 8,
+		float OriginX = 94,
+		float OriginY = 11,
 		float PixelsPerUnit = 64,
 		bool Smoothing = false,
 		bool Looping = true,

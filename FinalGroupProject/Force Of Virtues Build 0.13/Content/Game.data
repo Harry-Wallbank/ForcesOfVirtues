@@ -19,4 +19,8 @@ GameSession =
 	CameraViewports = 
 	{
 	},
+	GameQuitTest = 
+	{
+		bool ApplyQuit = false,
+	},
 },

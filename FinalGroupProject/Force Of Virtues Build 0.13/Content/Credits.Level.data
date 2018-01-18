@@ -69,7 +69,7 @@ Level =
 		},
 		ForwardRenderer = 
 		{
-			Vec4 ClearColor = [0.155000001, 0.155000001, 0.155000001, 1],
+			Vec4 ClearColor = [0, 0, 0, 1],
 			bool DrawNonVisible = false,
 			bool DrawDebugObjects = true,
 			bool DrawEditorIcons = true,
@@ -104,7 +104,7 @@ Level =
 		},
 		Transform = 
 		{
-			Vec3 Translation = [-11.9696283, -6.73380899, 48.9990005],
+			Vec3 Translation = [-9.91095448, -4.6439476, 48.9990005],
 			Vec3 Scale = [1, 1, 1],
 			Quat Rotation = [-0, -1.09278471e-08, 0, 1],
 		},
@@ -116,7 +116,7 @@ Level =
 			float FieldOfView = 45,
 			float NearPlane = 0.5,
 			float FarPlane = 500,
-			float Size = 7.33859921,
+			float Size = 6.64024687,
 		},
 		EditorCameraController = 
 		{
@@ -124,7 +124,7 @@ Level =
 			float LookDistance = 50,
 			float VerticalAngle = 0,
 			float HorizontalAngle = 0,
-			Vec3 LookTarget = [-11.9696283, -6.73380899, -1.00100005],
+			Vec3 LookTarget = [-9.91095448, -4.6439476, -1.00100017],
 			float MoveSensitivity = 1,
 		},
 		EditorRenderer = 
@@ -181,7 +181,7 @@ Level =
 		Transform = 
 		{
 			Vec3 Translation = [0, 5.80463696, 0],
-			Vec3 Scale = [1, 1, 1],
+			Vec3 Scale = [0.88933897, 0.88933897, 0.88933897],
 			Quat Rotation = [0, 0, 0, 1],
 		},
 		SpriteText = 
@@ -202,14 +202,17 @@ Brad Sayers
 Co-Producer
 Harry Wallbank
 
+Art
+Isaiah Haller
+
 Programmer
 Harry Wallbank
 
+Secondary Programmer
+Brad Sayers
+
 Game Design
 Marcus Janzen
-
-Art
-Isaiah Haller
 
 Head of Moral Support
 Brad Sayers
@@ -253,7 +256,7 @@ Isaiah Haller
 			BlendMode BlendMode = Alpha,
 			SpriteGeometryMode GeometryMode = ZPlane,
 			string SpriteLayer = "52ad5fa30d7fcd50:DefaultSpriteLayer",
-			string SpriteSource = "5a32d947efbb8028:Credits2",
+			string SpriteSource = "5a32d947efbb8028:CreditsBackground",
 			bool RenderMask = false,
 			bool FlipX = false,
 			bool FlipY = false,
@@ -288,7 +291,7 @@ Isaiah Haller
 			BlendMode BlendMode = Alpha,
 			SpriteGeometryMode GeometryMode = ZPlane,
 			string SpriteLayer = "52ad5fa30d7fcd50:DefaultSpriteLayer",
-			string SpriteSource = "5a32d947efb7258d:list",
+			string SpriteSource = "5a32d947efb7258d:CreditsForeground",
 			bool RenderMask = false,
 			bool FlipX = false,
 			bool FlipY = false,
@@ -328,7 +331,7 @@ Isaiah Haller
 			BlendMode BlendMode = Alpha,
 			SpriteGeometryMode GeometryMode = ZPlane,
 			string SpriteLayer = "52ad5fa30d7fcd50:DefaultSpriteLayer",
-			string SpriteSource = "5a32d947efb7258d:list",
+			string SpriteSource = "5a32d947efb7258d:CreditsForeground",
 			bool RenderMask = false,
 			bool FlipX = false,
 			bool FlipY = false,
@@ -355,7 +358,7 @@ Isaiah Haller
 		Transform = 
 		{
 			Vec3 Translation = [-11.9981117, -6.83152676, 0.100000001],
-			Vec3 Scale = [4.05482817, 4.05482817, 4.05482817],
+			Vec3 Scale = [2.09999347, 2.09999347, 2.09999347],
 			Quat Rotation = [0, 0, 0, 1],
 		},
 		Sprite = 
@@ -368,7 +371,7 @@ Isaiah Haller
 			BlendMode BlendMode = Alpha,
 			SpriteGeometryMode GeometryMode = ZPlane,
 			string SpriteLayer = "52ad5fa30d7fcd50:DefaultSpriteLayer",
-			string SpriteSource = "5a3dbab2ee9a7197:BACKanim",
+			string SpriteSource = "5a044900fbf62553:BackAnim",
 			bool RenderMask = false,
 			bool FlipX = false,
 			bool FlipY = false,
