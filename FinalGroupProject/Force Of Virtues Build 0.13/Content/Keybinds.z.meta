@@ -1,0 +1,8 @@
+TextContent = 
+{
+	ZilchScriptBuilder = 
+	{
+		string Name = "Keybinds",
+		uint64 ResourceId = 5a3b13c2b2e57791,
+	},
+},

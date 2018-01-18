@@ -1,0 +1,108 @@
+class Keybinds : ZilchComponent
+{
+    var TextToDisplay : String = "Press Any Key To Rebind";
+    [Property]
+    var Left : Boolean;
+    [Property]
+    var Right : Boolean;
+    [Property]
+    var Up : Boolean;
+    [Property]
+    var Down : Boolean;
+    [Property]
+    var Endturn : Boolean;
+    [Property]
+    var Text : CogPath;
+    var Boolean : Boolean;
+    function Initialize(init : CogInitializer)
+    {
+        Zero.Connect(this.Owner, Events.MouseEnter, this.OnMouseEnter);
+        Zero.Connect(this.Owner, Events.MouseExit, this.OnMouseExit);
+        Zero.Connect(this.Owner, Events.MouseDown, this.OnMouseDown);
+        Zero.Connect(this.Owner, Events.MouseUp, this.OnMouseUp);
+        Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
+        Zero.Connect(Zero.Keyboard, Events.KeyDown, this.OnKeyDown);
+    }
+    function OnKeyDown(event : KeyboardEvent)
+    {
+        if(this.Left && this.Boolean)
+        {
+            if(PlayerMovement.Leftmove != PlayerMovement.Rightmove || PlayerMovement.Leftmove != PlayerMovement.Up || PlayerMovement.Leftmove != PlayerMovement.Down || PlayerMovement.Leftmove != PlayerMovement.EndTurn)
+                PlayerMovement.Leftmove = event.Key;
+            this.Boolean = false;
+        }
+        if(this.Right && this.Boolean)
+        {
+            if(PlayerMovement.Rightmove != PlayerMovement.Leftmove || PlayerMovement.Rightmove != PlayerMovement.Up || PlayerMovement.Rightmove != PlayerMovement.Down || PlayerMovement.Rightmove != PlayerMovement.EndTurn)
+                PlayerMovement.Rightmove = event.Key;
+            this.Boolean = false;
+        }
+        if(this.Up && this.Boolean)
+        {
+            if(PlayerMovement.Up != PlayerMovement.Rightmove || PlayerMovement.Up != PlayerMovement.Leftmove || PlayerMovement.Up != PlayerMovement.Down || PlayerMovement.Up != PlayerMovement.EndTurn)
+                PlayerMovement.Up = event.Key;
+            this.Boolean = false;
+        }
+        if(this.Down && this.Boolean)
+        {
+            if(PlayerMovement.Down != PlayerMovement.Rightmove || PlayerMovement.Down != PlayerMovement.Up || PlayerMovement.Down != PlayerMovement.Leftmove || PlayerMovement.Down != PlayerMovement.EndTurn)
+                PlayerMovement.Down = event.Key;
+            this.Boolean = false;
+        }
+        if(this.Endturn && this.Boolean)
+        {
+            if(PlayerMovement.EndTurn != PlayerMovement.Rightmove || PlayerMovement.EndTurn != PlayerMovement.Up || PlayerMovement.EndTurn != PlayerMovement.Down || PlayerMovement.EndTurn != PlayerMovement.Leftmove)
+                PlayerMovement.EndTurn = event.Key;
+            this.Boolean = false;
+        }
+    }
+    function OnLogicUpdate(event : UpdateEvent)
+    {
+        if(!this.Boolean && this.Left)
+        {
+            this.Text.Cog.SpriteText.Text = "Left = `PlayerMovement.Leftmove`";
+        }
+        if(!this.Boolean && this.Right)
+        {
+            this.Text.Cog.SpriteText.Text = "Right = `PlayerMovement.Rightmove`";
+        }
+        if(!this.Boolean && this.Up)
+        {
+            this.Text.Cog.SpriteText.Text = "Up = `PlayerMovement.Up`";
+        }
+        if(!this.Boolean && this.Down)
+        {
+            this.Text.Cog.SpriteText.Text = "Down = `PlayerMovement.Down`";
+        }
+        if(!this.Boolean && this.Endturn)
+        {
+            this.Text.Cog.SpriteText.Text = "End Turn = `PlayerMovement.EndTurn`";
+        }
+    }
+
+    function RebindKey()
+    {
+        this.Text.Cog.SpriteText.Text = this.TextToDisplay;
+        this.Boolean = true;
+    }
+
+    function OnMouseUp(event : ViewportMouseEvent)
+    {
+        this.RebindKey();
+    }
+
+    function OnMouseDown(event : ViewportMouseEvent)
+    {
+        this.Owner.Sprite.Color = this.Owner.Sprite.Color + Real4(0.0, 0.0, 0.0, 1.0 - this.Owner.Sprite.Color.W);
+    }
+
+    function OnMouseExit(event : ViewportMouseEvent)
+    {
+        this.Owner.Sprite.Color = this.Owner.Sprite.Color + Real4(0.0, 0.0, 0.0, 1.0 - this.Owner.Sprite.Color.W);
+    }
+
+    function OnMouseEnter(event : ViewportMouseEvent)
+    {
+        this.Owner.Sprite.Color = this.Owner.Sprite.Color + Real4(0.0, 0.0, 0.0, 0.5 - this.Owner.Sprite.Color.W);
+    }
+}
