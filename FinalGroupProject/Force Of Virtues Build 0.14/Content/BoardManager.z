@@ -1,0 +1,149 @@
+class BoardManager : ZilchComponent
+{
+    [Property]
+    var Columns : Integer = 5;
+    [Property]
+    var Rows : Integer = 5;
+    
+    var Random : Random = Random();
+    
+    var PlayerSkinArray : Array[SpriteSource] = new Array[SpriteSource]();
+    var PlayerArray : Array[Cog] = new Array[Cog]();
+    var EnemySkinArray : Array[SpriteSource] = new Array[SpriteSource]();
+    var EnemyArray : Array[Cog] = new Array[Cog]();
+    var WallArray : Array[Cog] = new Array[Cog]();
+    
+    function Initialize(init : CogInitializer)
+    {
+        this.Space.CreateAtPosition(Archetype.Map,Real3(this.Columns /2,this.Rows/2,-1));
+        this.PlayerSkinArray.Add(SpriteSource.PlayerHeartAnimation);
+        this.PlayerSkinArray.Add(SpriteSource.PlayerRobotAnimation);
+        this.EnemySkinArray.Add(SpriteSource.EnemyHateAnimation);
+        this.EnemySkinArray.Add(SpriteSource.EnemyRobotAnimation);
+        this.BoardSetup(this.Columns,this.Rows);
+        this.CameraSetup(this.Columns,this.Rows);
+        this.EnemySetup(this.Columns,this.Rows);
+        this.PlayerSetup(this.Columns,this.Rows);
+    }
+    
+    function BoardSetup (columns : Integer, rows : Integer)
+    {
+        for(var x : Integer = -1; x<= columns; ++x)
+        {
+            for(var y : Integer = -1; y<= rows; ++y)
+            {
+                if(x == -1 || x == columns || y == -1 || y==rows)
+                {
+                    var wall = this.Space.CreateAtPosition(Archetype.Wall,Real3(x,y,0));
+                    this.WallArray.Add(wall);
+                }
+                else
+                    this.Space.CreateAtPosition(Archetype.Floor,Real3(x,y,-1));
+            }
+        }
+    }
+    
+    function CameraSetup(columns : Integer, rows : Integer)
+    {
+        var camera = this.Space.FindFirstObjectByName("Camera");
+        
+        if(columns % 2 != 0)
+            camera.Transform.Translation = Real3(columns / 2, rows / 2, 40);
+        else
+            camera.Transform.Translation = Real3(columns / 2 -0.5, rows / 2 -0.5 , 40);
+        camera.Camera.Size = 10;
+    }
+    
+    function EnemySetup(columns : Integer, rows : Integer)
+    {
+        var lastSpawnPoint : Array[Real3] = new Array[Real3]();
+        var numbers : Real4 = Real4(0,0,0,0);
+        for(var x : Integer = 0 ; x < 6 ; ++x)
+        {
+            var enemySpawnPoint = Real3(this.Random.DieRoll(columns -1),this.Random.DieRoll(rows -1),0);
+
+            while(enemySpawnPoint.X <= 3 && enemySpawnPoint.Y <= 3 || enemySpawnPoint.X == columns -1 && enemySpawnPoint.Y == rows -1)
+            {
+                enemySpawnPoint = Real3(this.Random.DieRoll(columns -1),this.Random.DieRoll(rows -1),0);
+                foreach(var spawnpoint in lastSpawnPoint)
+                {
+                    if(enemySpawnPoint == spawnpoint)
+                        enemySpawnPoint = Real3(this.Random.DieRoll(columns),this.Random.DieRoll(rows),0);
+                }
+            }
+
+            lastSpawnPoint.Add(enemySpawnPoint);
+
+            var enemy = this.Space.CreateAtPosition(Archetype.Enemy, enemySpawnPoint);
+            this.EnemyArray.Add(enemy);
+            enemy.ID.ID = x ;
+            enemy.Sprite.SpriteSource = this.EnemySkinArray[this.Random.RangeExclusiveMax(0,this.EnemySkinArray.Count)];
+            enemy.Sprite.AnimationSpeed = 0;
+            numbers = this.RandomNumberGen(numbers);
+            enemy.EnemyNum.LeftNum = numbers.X as Integer;
+            enemy.EnemyNum.RightNum = numbers.Y as Integer;
+            enemy.EnemyNum.BottomNum = numbers.Z as Integer;
+            enemy.EnemyNum.TopNum = numbers.W as Integer;
+            enemy.EnemyScript.TakeTurn = x /100;
+            ++this.LevelSettings.Ending.EnemiesTotal;
+        }
+    }
+    
+    function PlayerSetup(columns : Integer, rows : Integer)
+    {
+            var spawnLocations : Array[Real3] = new Array[Real3]();
+            spawnLocations.Add(Real3(0,0,0));
+            spawnLocations.Add(Real3(0,1,0));
+            spawnLocations.Add(Real3(0,2,0));
+            spawnLocations.Add(Real3(1,0,0));
+            spawnLocations.Add(Real3(2,0,0));
+            spawnLocations.Add(Real3(1,1,0));
+            spawnLocations.Add(Real3(1,2,0));
+            spawnLocations.Add(Real3(2,1,0));
+            spawnLocations.Add(Real3(2,2,0));
+
+        var numbers : Real4 = Real4(0,0,0,0);
+        for(var x : Integer = 0 ; x < 3 ; ++x)
+        {
+            var randomLocation = this.Random.DieRoll(spawnLocations.Count -1);
+            var player = this.Space.CreateAtPosition(Archetype.Player,spawnLocations[randomLocation]);
+            this.PlayerArray.Add(player);
+            spawnLocations.RemoveAt(randomLocation);
+            player.Sprite.SpriteSource = this.PlayerSkinArray[this.Random.RangeExclusiveMax(0,this.PlayerSkinArray.Count)];
+            player.Sprite.AnimationSpeed = 0;
+            player.ID.ID = x;
+            numbers = this.RandomNumberGen(numbers);
+            player.CollisionScript.LeftNum = numbers.X as Integer;
+            player.CollisionScript.RightNum = numbers.Y as Integer;
+            player.CollisionScript.BottomNum = numbers.Z as Integer;
+            player.CollisionScript.TopNum = numbers.W as Integer;
+            ++this.LevelSettings.Ending.PlayersTotal;
+        }
+    }
+    
+    function RandomNumberGen(lastNum : Real4) : Real4
+    {
+        var randomNum : Random = new Random();
+        var num : Real4 = Real4(0,0,0,0);
+        if(num == lastNum || num == Real4(0,0,0,0))
+        {
+            num = Real4(randomNum.DieRoll(10),randomNum.DieRoll(10),randomNum.DieRoll(10),randomNum.DieRoll(10));
+        }
+        while(num.X == lastNum.X || num.X == num.Y || num.X == num.Z || num.X == num.W
+         || num.Y == lastNum.Y || num.Y == num.X || num.Y == num.Z || num.Y == num.W
+         || num.Z == lastNum.Z || num.Z == num.X || num.Z == num.Y || num.Z == num.W
+         || num.W == lastNum.W || num.W == num.X || num.W == num.Z || num.W == num.Y)
+        {
+            if(num.W == lastNum.W || num.W == num.X || num.W == num.Z || num.W == num.Y)
+                num.W = randomNum.DieRoll(10);
+            if(num.Z == lastNum.Z || num.Z == num.X || num.Z == num.Y || num.Z == num.W)
+                num.Z = randomNum.DieRoll(10);
+            if(num.Y == lastNum.Y || num.Y == num.X || num.Y == num.Z || num.Y == num.W)
+                num.Y = randomNum.DieRoll(10);
+            if(num.X == lastNum.X || num.X == num.Y || num.X == num.Z || num.X == num.W)
+                num.X = randomNum.DieRoll(10);
+        }
+        
+        return num;
+    }
+}

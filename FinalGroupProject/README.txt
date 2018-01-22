@@ -24,8 +24,12 @@ Build 0.09
 	Reworked the battling so that the numbers werent random and that they were set dependant between the characters
 	fixed a bug to where the battling scene would stay in an infinate loop when the numbers were the same
 Build 0.11
-	brought back random battle starts except they cant be the same number on any of sides\
+	brought back random battle starts except they cant be the same number on any of sides
 	enemies have a lower chance of colliding with eachother
 Build 0.12 
 	Updated start menu and battle sequence art.
-	
+Build 0.13
+	Created an ending screen that happens when you kill all the enemys or if you loose all of your characters
+Build 0.14
+	Deleted the Exit sign so you have to kill all of the enemies to finish the game
+	Fixed a bug that made it so that the battling could be avoided by going inside of the enemy

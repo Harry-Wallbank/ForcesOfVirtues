@@ -1,0 +1,54 @@
+class Pause : ZilchComponent
+{
+    [Property]
+    var QuitPath : CogPath;
+    [Property]
+    var PlayPath : CogPath;
+    [Property]
+    var PausePath : CogPath;
+    
+    var Quit : Cog = null;
+    var Play : Cog = null;
+    var Pause : Cog = null;
+    
+    var Paused : Boolean = false;
+    
+    function Initialize(init : CogInitializer)
+    {
+        this.Quit = this.QuitPath.Cog;
+        this.Play = this.PlayPath.Cog;
+        this.Pause = this.PausePath.Cog;
+        Zero.Connect(Zero.Keyboard, Events.KeyUp, this.OnKeyUp);
+    }
+
+    function OnKeyUp(event : KeyboardEvent)
+    {
+        if(event.Key == Keys.Escape && !this.Paused)
+        {
+            this.PauseFunc();
+            this.Paused = true;
+        }
+        else if(event.Key == Keys.Escape && this.Paused)
+        {
+            this.Paused = false;
+            this.UnPauseFunc();
+        }
+    }
+    
+    function PauseFunc()
+    {
+        this.Quit.Transform.Translation = Real3(5,this.Quit.Transform.Translation.Y,5);
+        this.Play.Transform.Translation = Real3(5,this.Play.Transform.Translation.Y,5);
+        this.Pause.Transform.Translation = Real3(5,this.Pause.Transform.Translation.Y,5);
+        this.Space.TimeSpace.Paused = true;
+        PlayerMovement.Paused = true;
+    }
+    function UnPauseFunc()
+    {
+        this.Quit.Transform.Translation = Real3(-10,this.Quit.Transform.Translation.Y,5);
+        this.Play.Transform.Translation = Real3(-10,this.Play.Transform.Translation.Y,5);
+        this.Pause.Transform.Translation = Real3(-10,this.Pause.Transform.Translation.Y,5);
+        this.Space.TimeSpace.Paused = false;
+        PlayerMovement.Paused = false;
+    }
+}
