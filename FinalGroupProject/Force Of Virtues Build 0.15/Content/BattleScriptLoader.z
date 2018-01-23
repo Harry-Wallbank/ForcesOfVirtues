@@ -76,6 +76,8 @@ class BattleScriptLoader : ZilchComponent
                 win.SpriteText.Visible = false;
                 this.Battle = false; 
                 this.PlayerWin = false;
+                this.BattleTimerBool = false;
+                this.BattleTimer = 0.0;
                 
                 foreach(var player in this.LevelSettings.BoardManager.PlayerArray)
                 {
@@ -109,6 +111,8 @@ class BattleScriptLoader : ZilchComponent
                 lose.SpriteText.Visible = false;
                 this.Battle = false; 
                 this.EnemyWin = false;
+                this.BattleTimerBool = false;
+                this.BattleTimer = 0.0;
                 
                 foreach(var player in this.LevelSettings.BoardManager.PlayerArray)
                 {

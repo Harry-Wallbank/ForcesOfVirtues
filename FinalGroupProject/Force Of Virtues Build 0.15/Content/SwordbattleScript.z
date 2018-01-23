@@ -28,9 +28,9 @@ class SwordbattleScript : ZilchComponent
         }
         var swordSpeed = ((this.EnemyNum - this.PlayerNum) + 10) * event.Dt;
         if(this.PlayerNum > this.EnemyNum)
-            this.SwordMaxMove = Real2(21,27);
+            this.SwordMaxMove = Real2(24.5,28);
         else if(this.PlayerNum < this.EnemyNum)
-            this.SwordMaxMove = Real2(24,29);
+            this.SwordMaxMove = Real2(22,25.5);
         else if(this.PlayerNum == this.EnemyNum)
             this.SwordMaxMove = Real2(21,29);
         
