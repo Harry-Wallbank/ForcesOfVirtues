@@ -101,7 +101,8 @@ class PlayerMovement : ZilchComponent
         if(this.PlayerTurn && !PlayerMovement.Battling)
         foreach(var player in this.LevelSettings.BoardManager.PlayerArray)
         {
-            player.PlayerMovement.PlayerClicked = false;
+            if(player != null)
+                player.PlayerMovement.PlayerClicked = false;
         }
             this.PlayerClicked = true;
     }

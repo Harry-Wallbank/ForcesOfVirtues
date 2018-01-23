@@ -61,15 +61,15 @@ class BoardManager : ZilchComponent
         for(var x : Integer = 0 ; x < 6 ; ++x)
         {
             var enemySpawnPoint = Real3(this.Random.DieRoll(columns -1),this.Random.DieRoll(rows -1),0);
+            foreach(var spawnpoint in lastSpawnPoint)
+            {
+                if(enemySpawnPoint == spawnpoint)
+                    enemySpawnPoint = Real3(this.Random.DieRoll(columns),this.Random.DieRoll(rows),0);
+            }
 
             while(enemySpawnPoint.X <= 3 && enemySpawnPoint.Y <= 3 || enemySpawnPoint.X == columns -1 && enemySpawnPoint.Y == rows -1)
             {
                 enemySpawnPoint = Real3(this.Random.DieRoll(columns -1),this.Random.DieRoll(rows -1),0);
-                foreach(var spawnpoint in lastSpawnPoint)
-                {
-                    if(enemySpawnPoint == spawnpoint)
-                        enemySpawnPoint = Real3(this.Random.DieRoll(columns),this.Random.DieRoll(rows),0);
-                }
             }
 
             lastSpawnPoint.Add(enemySpawnPoint);

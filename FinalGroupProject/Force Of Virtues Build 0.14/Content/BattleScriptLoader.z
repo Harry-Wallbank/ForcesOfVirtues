@@ -143,6 +143,11 @@ class BattleScriptLoader : ZilchComponent
                     this.TimerBool = false;
                     this.Battle = false; 
                     this.LevelSettings.Ending.EnemiesKilled +=1;
+                    foreach(var player in this.LevelSettings.BoardManager.PlayerArray)
+                    {
+                        if(player != null)
+                            player.CollisionScript.Battling = false;
+                    }
                 }
             }
             if(enemyWin)
@@ -175,6 +180,11 @@ class BattleScriptLoader : ZilchComponent
                     this.TimerBool = false;
                     this.Battle = false; 
                     this.LevelSettings.Ending.PlayersKilled +=1;
+                    foreach(var player in this.LevelSettings.BoardManager.PlayerArray)
+                    {
+                        if(player != null)
+                            player.CollisionScript.Battling = false;
+                    }
                 }
             }
         }

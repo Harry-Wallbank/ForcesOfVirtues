@@ -32,4 +32,6 @@ Build 0.13
 	Created an ending screen that happens when you kill all the enemys or if you loose all of your characters
 Build 0.14
 	Deleted the Exit sign so you have to kill all of the enemies to finish the game
-	Fixed a bug that made it so that the battling could be avoided by going inside of the enemy
+	Fixed bug where the enemies can spawn ontop of eachother and didnt stay within a certain parameters
+	Fixed bug where the enemy and the player could go into eachother without triggering the battling script
+Build 0.15
