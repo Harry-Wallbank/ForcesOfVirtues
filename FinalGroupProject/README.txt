@@ -35,3 +35,6 @@ Build 0.14
 	Fixed bug where the enemies can spawn ontop of eachother and didnt stay within a certain parameters
 	Fixed bug where the enemy and the player could go into eachother without triggering the battling script
 Build 0.15
+	Made a new way to battle with a sprite that moves along an axis that is processed on wether you have a higher number or lower number of the enemy and the speed 
+	is the difference of them
+

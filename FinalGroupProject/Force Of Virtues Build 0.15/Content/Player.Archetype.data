@@ -14,7 +14,7 @@ Cog =
 	},
 	Transform = 
 	{
-		Vec3 Translation = [-10, 0, 0],
+		Vec3 Translation = [0, 0, 0],
 		Vec3 Scale = [1, 1, 1],
 		Quat Rotation = [0, 0, 0, 1],
 	},
@@ -52,7 +52,7 @@ Cog =
 		bool Asleep = false,
 		bool Kinematic = false,
 		bool RotationLocked = false,
-		bool Mode2D = true,
+		bool Mode2D = false,
 		bool AllowSleep = true,
 		bool Inherit2DMode = true,
 		Vec3 Velocity = [0, 0, 0],
@@ -68,6 +68,21 @@ Cog =
 	},
 	CollisionScript = 
 	{
+		CogPath SwordPath = 
+		{
+			string Path = "",
+			bool ErrorOnResolveToNull = false,
+			bool ErrorOnPathCantCompute = false,
+			bool ErrorOnDirectLinkFail = false,
+			bool UpdateCogOnPathChange = true,
+			bool UpdatePathOnCogChange = true,
+			bool UpdateCogOnInitialize = true,
+			bool ResolvedNullErrorOccurred = false,
+			uint ResolvedCog = 2,
+			CogPathPreference PathPreference0 = CogRelative,
+			CogPathPreference PathPreference1 = SpaceRelative,
+			CogPathPreference PathPreference2 = Absolute,
+		},
 	},
 	ID = 
 	{
@@ -78,7 +93,7 @@ Cog =
 		{
 			LinkId = 
 			{
-				uint Id = 2,
+				uint Id = 3,
 			},
 			Named = 
 			{
@@ -120,7 +135,7 @@ Cog =
 		{
 			LinkId = 
 			{
-				uint Id = 3,
+				uint Id = 4,
 			},
 			Named = 
 			{
@@ -162,7 +177,7 @@ Cog =
 		{
 			LinkId = 
 			{
-				uint Id = 4,
+				uint Id = 5,
 			},
 			Named = 
 			{
@@ -204,7 +219,7 @@ Cog =
 		{
 			LinkId = 
 			{
-				uint Id = 5,
+				uint Id = 6,
 			},
 			Named = 
 			{

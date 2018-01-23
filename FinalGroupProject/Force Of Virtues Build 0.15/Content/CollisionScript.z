@@ -7,8 +7,11 @@ class CollisionScript : ZilchComponent
     var TopNum : Integer = 0;
     var BottomNum : Integer = 0;
     
+    var Sword : Cog;
+    
     function Initialize(init : CogInitializer)
     {
+        this.Sword = this.Space.FindFirstObjectByName("Sword");
         Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
     }
     function OnLogicUpdate(event : UpdateEvent)
@@ -29,8 +32,9 @@ class CollisionScript : ZilchComponent
                     this.LevelSettings.BattleScriptLoader.Enemy = enemy;
                     this.LevelSettings.BattleScriptLoader.Player = this.Owner;
                     this.Battling = true;
-                    this.LevelSettings.BattleScriptLoader.PlayerLeftNum = this.LeftNum;
-                    this.LevelSettings.BattleScriptLoader.EnemyRightNum = enemy.EnemyNum.RightNum;
+                    this.Sword.SwordbattleScript.PlayerNum = this.LeftNum;
+                    this.Sword.SwordbattleScript.EnemyNum = enemy.EnemyNum.RightNum;
+                    this.Sword.SwordbattleScript.Moving = true;
                     
                 }
                 //checks bellow
@@ -40,8 +44,9 @@ class CollisionScript : ZilchComponent
                     this.LevelSettings.BattleScriptLoader.Enemy = enemy;
                     this.LevelSettings.BattleScriptLoader.Player = this.Owner;
                     this.Battling = true;
-                    this.LevelSettings.BattleScriptLoader.PlayerBottomNum = this.BottomNum;
-                    this.LevelSettings.BattleScriptLoader.EnemyTopNum = enemy.EnemyNum.TopNum;
+                    this.Sword.SwordbattleScript.PlayerNum = this.BottomNum;
+                    this.Sword.SwordbattleScript.EnemyNum = enemy.EnemyNum.TopNum;
+                    this.Sword.SwordbattleScript.Moving = true;
                 }
                 //checks right
                 if(Math.Distance((this.Owner.Transform.Translation + Real3(1,0,0)), enemyPos) < 0.01 && !this.Battling)
@@ -50,8 +55,9 @@ class CollisionScript : ZilchComponent
                     this.LevelSettings.BattleScriptLoader.Enemy = enemy;
                     this.LevelSettings.BattleScriptLoader.Player = this.Owner;
                     this.Battling = true;
-                    this.LevelSettings.BattleScriptLoader.PlayerRightNum = this.RightNum;
-                    this.LevelSettings.BattleScriptLoader.EnemyLeftNum = enemy.EnemyNum.LeftNum;
+                    this.Sword.SwordbattleScript.PlayerNum = this.RightNum;
+                    this.Sword.SwordbattleScript.EnemyNum = enemy.EnemyNum.LeftNum;
+                    this.Sword.SwordbattleScript.Moving = true;
                 }
                 //checks above
                 if(Math.Distance((this.Owner.Transform.Translation + Real3(0,1,0)), enemyPos)  < 0.01 && !this.Battling)
@@ -60,17 +66,9 @@ class CollisionScript : ZilchComponent
                     this.LevelSettings.BattleScriptLoader.Enemy = enemy;
                     this.LevelSettings.BattleScriptLoader.Player = this.Owner;
                     this.Battling = true;
-                    this.LevelSettings.BattleScriptLoader.PlayerTopNum = this.TopNum;
-                    this.LevelSettings.BattleScriptLoader.EnemyBottomNum = enemy.EnemyNum.BottomNum;
-                }
-                if(this.Owner.Transform.Translation == enemyPos && !this.Battling)
-                {
-                    this.LevelSettings.BattleScriptLoader.BattleScriptEnabled = true;
-                    this.LevelSettings.BattleScriptLoader.Enemy = enemy;
-                    this.LevelSettings.BattleScriptLoader.Player = this.Owner;
-                    this.Battling = true;
-                    this.LevelSettings.BattleScriptLoader.PlayerTopNum = this.TopNum;
-                    this.LevelSettings.BattleScriptLoader.EnemyBottomNum = this.BottomNum;
+                    this.Sword.SwordbattleScript.PlayerNum = this.TopNum;
+                    this.Sword.SwordbattleScript.EnemyNum = enemy.EnemyNum.BottomNum;
+                    this.Sword.SwordbattleScript.Moving = true;
                 }
             }
         }

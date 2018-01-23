@@ -178,7 +178,7 @@ Level =
 		},
 		Transform = 
 		{
-			Vec3 Translation = [2.43167996, 2.62304091, 52.9992485],
+			Vec3 Translation = [24.6208553, 0.251648307, 52.9992523],
 			Vec3 Scale = [1, 1, 1],
 			Quat Rotation = [-0, -1.09278471e-08, 0, 1],
 		},
@@ -190,7 +190,7 @@ Level =
 			float FieldOfView = 45,
 			float NearPlane = 0.5,
 			float FarPlane = 500,
-			float Size = 20.1896839,
+			float Size = 18.268383,
 		},
 		EditorCameraController = 
 		{
@@ -198,7 +198,7 @@ Level =
 			float LookDistance = 50,
 			float VerticalAngle = 0,
 			float HorizontalAngle = 0,
-			Vec3 LookTarget = [2.43167996, 2.62304091, 2.99924994],
+			Vec3 LookTarget = [24.6208553, 0.251648307, 2.99925089],
 			float MoveSensitivity = 1,
 		},
 		EditorRenderer = 
@@ -289,7 +289,7 @@ Level =
 		},
 		Transform = 
 		{
-			Vec3 Translation = [25, 1, 1],
+			Vec3 Translation = [25, 1, 2],
 			Vec3 Scale = [1, 1, 1],
 			Quat Rotation = [0, 0, 0, 1],
 		},
@@ -323,7 +323,7 @@ Level =
 		},
 		Transform = 
 		{
-			Vec3 Translation = [25, 1, 1],
+			Vec3 Translation = [25, 1, 2],
 			Vec3 Scale = [1, 1, 1],
 			Quat Rotation = [0, 0, 0, 1],
 		},
@@ -591,6 +591,44 @@ Level =
 					Location Origin = Center,
 				},
 			},
+		},
+	},
+	Cog = 
+	{
+		LinkId = 
+		{
+			uint Id = 13,
+		},
+		Named = 
+		{
+			string Name = "Sword",
+		},
+		Transform = 
+		{
+			Vec3 Translation = [25, -1.5, 1],
+			Vec3 Scale = [1, 1, 1],
+			Quat Rotation = [0, 0, 0, 1],
+		},
+		Sprite = 
+		{
+			bool Visible = true,
+			bool VisibilityCulling = true,
+			bool VisibilityEvents = true,
+			bool CastShadows = false,
+			Vec4 Color = [1, 1, 1, 1],
+			BlendMode BlendMode = Alpha,
+			SpriteGeometryMode GeometryMode = ZPlane,
+			string SpriteLayer = "52ad5fa30d7fcd50:DefaultSpriteLayer",
+			string SpriteSource = "5275aa4d802dd6dc:Square",
+			bool RenderMask = false,
+			bool FlipX = false,
+			bool FlipY = false,
+			bool AnimationActive = true,
+			float AnimationSpeed = 1,
+			uint StartFrame = 0,
+		},
+		SwordbattleScript = 
+		{
 		},
 	},
 },

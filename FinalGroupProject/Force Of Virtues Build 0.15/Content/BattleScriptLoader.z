@@ -5,8 +5,6 @@ class BattleScriptLoader : ZilchComponent
     var Camera : Cog = null;
     var CameraBoardPos : Real3;
     
-    var Timer : Real = 0.0;
-    var TimerBool : Boolean;
     var BattleTimer : Real = 0.0;
     var BattleTimerBool : Boolean;
     
@@ -22,14 +20,8 @@ class BattleScriptLoader : ZilchComponent
     
     var Battle : Boolean = false;
     
-    var PlayerLeftNum : Integer = 0;
-    var PlayerRightNum : Integer = 0;
-    var PlayerTopNum : Integer = 0;
-    var PlayerBottomNum : Integer = 0;
-    var EnemyLeftNum : Integer = 0;
-    var EnemyRightNum : Integer = 0;
-    var EnemyTopNum : Integer = 0;
-    var EnemyBottomNum : Integer = 0;
+    var PlayerWin : Boolean = false;
+    var EnemyWin : Boolean = false;
     
     function Initialize(init : CogInitializer)
     {
@@ -39,14 +31,8 @@ class BattleScriptLoader : ZilchComponent
     
     function OnLogicUpdate(event : UpdateEvent)
     {
-        if(this.TimerBool)
-            this.Timer += event.Dt;
-        if(!this.TimerBool)
-            this.Timer = 0.0;
         if(this.BattleTimerBool)
             this.BattleTimer += event.Dt;
-        if(!this.BattleTimerBool)
-            this.BattleTimer = 0.0;
         if(this.BattleScriptEnabled)
         {
             this.BattleSetup();
@@ -56,7 +42,6 @@ class BattleScriptLoader : ZilchComponent
         }
         if(this.Battle)
         {
-            this.TimerBool = true;
             this.BattleStart(event.Dt);
         }
     }
@@ -65,126 +50,70 @@ class BattleScriptLoader : ZilchComponent
     {
         var win = this.Space.FindFirstObjectByName("You Win");
         var lose = this.Space.FindFirstObjectByName("You Lose");
-        var playerWin : Boolean = false;
-        var enemyWin : Boolean = false;
-        if(this.PlayerLeftNum > this.EnemyRightNum)
-            playerWin = true;
-        else if(this.PlayerRightNum > this.EnemyLeftNum)
-            playerWin = true;
-        else if(this.PlayerTopNum > this.EnemyBottomNum)
-            playerWin = true;
-        else if(this.PlayerBottomNum > this.EnemyTopNum)
-            playerWin = true;
-        else if(this.EnemyLeftNum > this.PlayerRightNum)
-            enemyWin = true;
-        else if(this.EnemyRightNum > this.PlayerLeftNum)
-            enemyWin = true;
-        else if(this.EnemyTopNum > this.PlayerBottomNum)
-            enemyWin = true;
-        else if(this.EnemyBottomNum > this.PlayerTopNum)
-            enemyWin = true;
-        else
+        if(this.PlayerWin)
         {
-            this.Player.Destroy();
-            this.Enemy.Destroy();
-            this.Camera.Transform.Translation = this.CameraBoardPos;
-            this.Camera.Camera.Size = 10;
-            this.LevelSettings.BoardManager.EnemyArray.RemoveFirst(this.Enemy);
-            PlayerMovement.Battling = false;
-            EnemyScript.Battling = false;
-            NumChanger.Visible = true;
-            this.PlayerLeftNum = 0;
-            this.PlayerRightNum = 0;
-            this.PlayerTopNum = 0;
-            this.PlayerBottomNum = 0;
-            this.EnemyLeftNum = 0;
-            this.EnemyRightNum = 0;
-            this.EnemyTopNum = 0;
-            this.EnemyBottomNum = 0;
-            this.Player.Sprite.FlipX = this.PlayerFlipX;
-            win.SpriteText.Visible = false;
-            this.BattleTimerBool = false;
-            this.TimerBool = false;
-            this.Battle = false; 
-            this.LevelSettings.Ending.PlayersKilled +=1;
-            this.LevelSettings.Ending.EnemiesKilled +=1;
-        }
-        
-        if(this.Timer >= 1.0)
-        {
-            if(playerWin)
+            win.SpriteText.Visible = true;
+            this.BattleTimerBool = true;
+            if(this.BattleTimer >= 1.0)
             {
-                win.SpriteText.Visible = true;
-                this.BattleTimerBool = true;
-                if(this.BattleTimer >= 1.0)
+                this.Enemy.Destroy();
+                EnemyScript.Battling = false;
+                
+                this.Player.Transform.Translation = this.PlayerBoardPos;
+                this.Player.Sprite.AnimationSpeed = 0;
+                this.Player.Sprite.CurrentFrame = 0;
+                this.Player.CollisionScript.Battling = false;
+                PlayerMovement.Battling = false;
+                this.Player.Sprite.FlipX = this.PlayerFlipX;
+                
+                this.Camera.Transform.Translation = this.CameraBoardPos;
+                this.Camera.Camera.Size = 10;
+                
+                this.LevelSettings.BoardManager.EnemyArray.RemoveFirst(this.Enemy);
+                this.LevelSettings.Ending.EnemiesKilled +=1;
+                
+                NumChanger.Visible = true;
+                win.SpriteText.Visible = false;
+                this.Battle = false; 
+                this.PlayerWin = false;
+                
+                foreach(var player in this.LevelSettings.BoardManager.PlayerArray)
                 {
-                    this.Enemy.Destroy();
-                    this.Player.Transform.Translation = this.PlayerBoardPos;
-                    this.Player.Sprite.AnimationSpeed = 0;
-                    this.Player.Sprite.CurrentFrame = 0;
-                    this.Player.CollisionScript.Battling = false;
-                    this.Camera.Transform.Translation = this.CameraBoardPos;
-                    this.Camera.Camera.Size = 10;
-                    this.LevelSettings.BoardManager.EnemyArray.RemoveFirst(this.Enemy);
-                    PlayerMovement.Battling = false;
-                    EnemyScript.Battling = false;
-                    NumChanger.Visible = true;
-                    this.PlayerLeftNum = 0;
-                    this.PlayerRightNum = 0;
-                    this.PlayerTopNum = 0;
-                    this.PlayerBottomNum = 0;
-                    this.EnemyLeftNum = 0;
-                    this.EnemyRightNum = 0;
-                    this.EnemyTopNum = 0;
-                    this.EnemyBottomNum = 0;
-                    this.Player.Sprite.FlipX = this.PlayerFlipX;
-                    win.SpriteText.Visible = false;
-                    this.BattleTimerBool = false;
-                    this.TimerBool = false;
-                    this.Battle = false; 
-                    this.LevelSettings.Ending.EnemiesKilled +=1;
-                    foreach(var player in this.LevelSettings.BoardManager.PlayerArray)
-                    {
-                        if(player != null)
-                            player.CollisionScript.Battling = false;
-                    }
+                    if(player != null)
+                        player.CollisionScript.Battling = false;
                 }
             }
-            if(enemyWin)
+        }
+        if(this.EnemyWin)
+        {
+            lose.SpriteText.Visible = true;
+            this.BattleTimerBool = true;
+            if(this.BattleTimer >= 1.0)
             {
-                lose.SpriteText.Visible = true;
-                this.BattleTimerBool = true;
-                if(this.BattleTimer >= 1.0)
+                this.Player.Destroy();
+                PlayerMovement.Battling = false;
+                
+                this.Enemy.Transform.Translation = this.PlayerBoardPos;
+                this.Enemy.Sprite.AnimationSpeed = 0;
+                this.Enemy.Sprite.CurrentFrame = 0;
+                EnemyScript.Battling = false;
+                this.Enemy.Sprite.FlipX = this.EnemyFlipX;
+                
+                this.Camera.Transform.Translation = this.CameraBoardPos;
+                this.Camera.Camera.Size = 10;
+                
+                this.LevelSettings.BoardManager.PlayerArray.RemoveFirst(this.Player);
+                this.LevelSettings.Ending.PlayersKilled +=1;
+                
+                NumChanger.Visible = true;
+                lose.SpriteText.Visible = false;
+                this.Battle = false; 
+                this.EnemyWin = false;
+                
+                foreach(var player in this.LevelSettings.BoardManager.PlayerArray)
                 {
-                    this.Player.Destroy();
-                    this.Enemy.Transform.Translation = this.PlayerBoardPos;
-                    this.Enemy.Sprite.AnimationSpeed = 0;
-                    this.Enemy.Sprite.CurrentFrame = 0;
-                    this.Camera.Transform.Translation = this.CameraBoardPos;
-                    this.Camera.Camera.Size = 10;
-                    this.LevelSettings.BoardManager.PlayerArray.RemoveFirst(this.Player);
-                    PlayerMovement.Battling = false;
-                    EnemyScript.Battling = false;
-                    NumChanger.Visible = true;
-                    this.PlayerLeftNum = 0;
-                    this.PlayerRightNum = 0;
-                    this.PlayerTopNum = 0;
-                    this.PlayerBottomNum = 0;
-                    this.EnemyLeftNum = 0;
-                    this.EnemyRightNum = 0;
-                    this.EnemyTopNum = 0;
-                    this.EnemyBottomNum = 0;
-                    this.Enemy.Sprite.FlipX = this.EnemyFlipX;
-                    lose.SpriteText.Visible = false;
-                    this.BattleTimerBool = false;
-                    this.TimerBool = false;
-                    this.Battle = false; 
-                    this.LevelSettings.Ending.PlayersKilled +=1;
-                    foreach(var player in this.LevelSettings.BoardManager.PlayerArray)
-                    {
-                        if(player != null)
-                            player.CollisionScript.Battling = false;
-                    }
+                    if(player != null)
+                        player.CollisionScript.Battling = false;
                 }
             }
         }
@@ -192,6 +121,7 @@ class BattleScriptLoader : ZilchComponent
     
     function BattleSetup()
     {
+        Console.WriteLine("Setup");
         this.CameraBoardPos = this.Camera.Transform.Translation;
         this.Camera.Transform.Translation = Real3(25,0,40);
         this.Camera.Camera.Size = 5;
