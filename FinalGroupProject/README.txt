@@ -35,6 +35,11 @@ Build 0.14
 	Fixed bug where the enemies can spawn ontop of eachother and didnt stay within a certain parameters
 	Fixed bug where the enemy and the player could go into eachother without triggering the battling script
 Build 0.15
+	Added a new way to battle with a sword which makes the battling feel more player inttuative
+Build 0.16
+	Fixed a bug with the sword where it would dissapear and go to the playing field
+	Added new sprites for the win lose screen and a new battle ending sprites
+
 	Made a new way to battle with a sprite that moves along an axis that is processed on wether you have a higher number or lower number of the enemy and the speed 
 	is the difference of them
 

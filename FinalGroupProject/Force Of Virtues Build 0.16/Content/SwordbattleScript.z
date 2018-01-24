@@ -1,0 +1,77 @@
+class SwordbattleScript : ZilchComponent
+{
+    var Moving : Boolean = false;
+    var Sword : Boolean = false;
+    
+    var PlayerNum : Integer;
+    var EnemyNum : Integer;
+    
+    var SwordMaxMove : Real2;
+    
+    var MoveLeft : Boolean = true;
+    var MoveRight : Boolean = false;
+    var HitEnd : Boolean = false;
+    
+    function Initialize(init : CogInitializer)
+    {
+        Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
+        Zero.Connect(Zero.Keyboard, Events.KeyDown , this.OnKeyDown);
+    }
+
+    function OnLogicUpdate(event : UpdateEvent)
+    {
+        if(this.Moving == true)
+        {
+            this.LevelSettings.BattleScriptLoader.PlayerWin = false;
+            this.LevelSettings.BattleScriptLoader.EnemyWin = false;
+            this.Sword = true;
+        }
+        var swordSpeed = ((this.EnemyNum - this.PlayerNum) + 10) * event.Dt;
+        if(this.PlayerNum > this.EnemyNum)
+            this.SwordMaxMove = Real2(24.5,28);
+        else if(this.PlayerNum < this.EnemyNum)
+            this.SwordMaxMove = Real2(22,25.5);
+        else if(this.PlayerNum == this.EnemyNum)
+            this.SwordMaxMove = Real2(21,29);
+        
+        if(this.Moving)
+        {
+            if(this.MoveLeft)
+                this.Owner.Transform.Translation -= Real3(swordSpeed,0,0);
+            if(this.MoveRight)
+                this.Owner.Transform.Translation += Real3(swordSpeed,0,0);
+            if(this.MoveLeft && this.Owner.Transform.Translation.X <= this.SwordMaxMove.X && !this.HitEnd)
+            {
+                this.MoveLeft = false;
+                this.MoveRight = true;
+                this.HitEnd = true;
+            }
+            if(this.MoveRight && this.Owner.Transform.Translation.X >= this.SwordMaxMove.Y && this.HitEnd)
+            {
+                this.MoveLeft = true;
+                this.MoveRight = false;
+                this.HitEnd = false;
+            }
+        }
+    }
+    
+    function OnKeyDown(event : KeyboardEvent)
+    {
+        if(event.Key == Keys.Space && this.Sword)
+        {
+            this.Moving = false;
+            if(this.Owner.Transform.Translation.X < 25)
+            {
+                this.Owner.Transform.Translation.X = 25;
+                this.LevelSettings.BattleScriptLoader.EnemyWin = true;
+                this.Sword = false;
+            }
+            if(this.Owner.Transform.Translation.X > 25)
+            {
+                this.Owner.Transform.Translation.X = 25;
+                this.LevelSettings.BattleScriptLoader.PlayerWin = true;
+                this.Sword = false;
+            }
+        }
+    }
+}

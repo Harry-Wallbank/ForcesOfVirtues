@@ -1,0 +1,20 @@
+ImageContent = 
+{
+	SpriteSourceBuilder = 
+	{
+		string Name = "Back(Paused)",
+		uint64 ResourceId = 5a0c1e7097b076a0,
+		uint64 AtlasId = 5274cf95e4a661fd,
+		uint FrameSizeX = 68,
+		uint FrameSizeY = 17,
+		uint FrameCount = 2,
+		float FrameDelay = 0.5,
+		float OriginX = 34,
+		float OriginY = 8.5,
+		float PixelsPerUnit = 64,
+		bool Smoothing = false,
+		bool Looping = true,
+		Vec4 Slices = [0, 0, 0, 0],
+		SpriteFill Fill = Stretch,
+	},
+},
