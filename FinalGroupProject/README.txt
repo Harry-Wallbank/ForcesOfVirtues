@@ -44,5 +44,7 @@ Build 0.16
 	is the difference of them
 	Added in sounds which completes the game to its current state
 Build 0.17
+	Fixed a bug that was caused when the enemies got falsly deleted from the array and was then not taken into the collision
+	script which made it so that they were never checked for
 	
 
