@@ -1,0 +1,37 @@
+class EnemyCollisionScript : ZilchComponent
+{
+    function Initialize(init : CogInitializer)
+    {
+        Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
+    }
+    function OnLogicUpdate(event : UpdateEvent)
+    {
+        this.Owner.EnemyScript.EnemyCanMoveLeft = true;
+        this.Owner.EnemyScript.EnemyCanMoveBottom = true;
+        this.Owner.EnemyScript.EnemyCanMoveTop = true;
+        this.Owner.EnemyScript.EnemyCanMoveRight = true;
+        foreach(var enemy in this.LevelSettings.BoardManager.EnemyArray)
+        {
+            if(enemy != null)
+            {
+                var enemyPos = enemy.Transform.Translation;
+                if(Math.Distance((this.Owner.Transform.Translation - Real3(1,0,0)), enemyPos) < 0.01)
+                {
+                    this.Owner.EnemyScript.EnemyCanMoveLeft = false;
+                }
+                if(Math.Distance((this.Owner.Transform.Translation - Real3(0,1,0)), enemyPos) < 0.01)
+                {
+                    this.Owner.EnemyScript.EnemyCanMoveBottom = false;
+                }
+                if(Math.Distance((this.Owner.Transform.Translation + Real3(1,0,0)), enemyPos) < 0.01)
+                {
+                    this.Owner.EnemyScript.EnemyCanMoveRight = false;
+                }
+                if(Math.Distance((this.Owner.Transform.Translation + Real3(0,1,0)), enemyPos) < 0.01)
+                {
+                    this.Owner.EnemyScript.EnemyCanMoveTop = false;
+                }
+            }
+        }
+    }
+}

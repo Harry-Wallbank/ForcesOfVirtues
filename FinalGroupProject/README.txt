@@ -42,4 +42,7 @@ Build 0.16
 
 	Made a new way to battle with a sprite that moves along an axis that is processed on wether you have a higher number or lower number of the enemy and the speed 
 	is the difference of them
+	Added in sounds which completes the game to its current state
+Build 0.17
+	
 
