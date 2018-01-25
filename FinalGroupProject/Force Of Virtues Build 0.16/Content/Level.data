@@ -178,7 +178,7 @@ Level =
 		},
 		Transform = 
 		{
-			Vec3 Translation = [25.0896168, -0.458423406, 52.9992523],
+			Vec3 Translation = [25.0505581, 0.505105317, 52.9992523],
 			Vec3 Scale = [1, 1, 1],
 			Quat Rotation = [-0, -1.09278471e-08, 0, 1],
 		},
@@ -198,7 +198,7 @@ Level =
 			float LookDistance = 50,
 			float VerticalAngle = 0,
 			float HorizontalAngle = 0,
-			Vec3 LookTarget = [25.0896168, -0.458423406, 2.99925065],
+			Vec3 LookTarget = [25.0505581, 0.505105317, 2.99925065],
 			float MoveSensitivity = 1,
 		},
 		EditorRenderer = 
@@ -275,6 +275,18 @@ Level =
 			bool AnimationActive = true,
 			float AnimationSpeed = 1,
 			uint StartFrame = 0,
+		},
+		SoundEmitter = 
+		{
+			float Volume = 1,
+			float Pitch = 0,
+			float PitchSemitones = 0,
+			bool UsePitchSemitones = false,
+			bool Positional = true,
+			int Version = 1,
+		},
+		BattleSounds = 
+		{
 		},
 	},
 	Cog = 
@@ -380,6 +392,18 @@ Level =
 			bool AnimationActive = true,
 			float AnimationSpeed = 1,
 			uint StartFrame = 0,
+		},
+		SoundEmitter = 
+		{
+			float Volume = 1,
+			float Pitch = 0,
+			float PitchSemitones = 0,
+			bool UsePitchSemitones = false,
+			bool Positional = true,
+			int Version = 1,
+		},
+		BackgroundMusic = 
+		{
 		},
 		Hierarchy = 
 		{

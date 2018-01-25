@@ -28,6 +28,7 @@ class CollisionScript : ZilchComponent
                 //checks left
                 if(Math.Distance((this.Owner.Transform.Translation - Real3(1,0,0)), enemyPos) < 0.01 && !this.Battling)
                 {
+                    Console.WriteLine("Left");
                     this.LevelSettings.BattleScriptLoader.BattleScriptEnabled = true;
                     this.LevelSettings.BattleScriptLoader.Enemy = enemy;
                     this.LevelSettings.BattleScriptLoader.Player = this.Owner;
@@ -40,6 +41,7 @@ class CollisionScript : ZilchComponent
                 //checks bellow
                 if(Math.Distance((this.Owner.Transform.Translation - Real3(0,1,0)), enemyPos) < 0.01 && !this.Battling)
                 {
+                    Console.WriteLine("Bellow");
                     this.LevelSettings.BattleScriptLoader.BattleScriptEnabled = true;
                     this.LevelSettings.BattleScriptLoader.Enemy = enemy;
                     this.LevelSettings.BattleScriptLoader.Player = this.Owner;
@@ -51,6 +53,7 @@ class CollisionScript : ZilchComponent
                 //checks right
                 if(Math.Distance((this.Owner.Transform.Translation + Real3(1,0,0)), enemyPos) < 0.01 && !this.Battling)
                 {
+                    Console.WriteLine("Right");
                     this.LevelSettings.BattleScriptLoader.BattleScriptEnabled = true;
                     this.LevelSettings.BattleScriptLoader.Enemy = enemy;
                     this.LevelSettings.BattleScriptLoader.Player = this.Owner;
@@ -62,6 +65,7 @@ class CollisionScript : ZilchComponent
                 //checks above
                 if(Math.Distance((this.Owner.Transform.Translation + Real3(0,1,0)), enemyPos)  < 0.01 && !this.Battling)
                 {
+                    Console.WriteLine("Above");
                     this.LevelSettings.BattleScriptLoader.BattleScriptEnabled = true;
                     this.LevelSettings.BattleScriptLoader.Enemy = enemy;
                     this.LevelSettings.BattleScriptLoader.Player = this.Owner;

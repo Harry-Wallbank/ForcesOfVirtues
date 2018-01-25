@@ -104,7 +104,7 @@ Level =
 		},
 		Transform = 
 		{
-			Vec3 Translation = [0.160164446, -5.75638676, 90],
+			Vec3 Translation = [3.48144555, 0.599857569, 90],
 			Vec3 Scale = [1, 1, 1],
 			Quat Rotation = [-0, -1.09278471e-08, 0, 1],
 		},
@@ -116,7 +116,7 @@ Level =
 			float FieldOfView = 45,
 			float NearPlane = 0.5,
 			float FarPlane = 500,
-			float Size = 22.0464344,
+			float Size = 24.3650742,
 		},
 		EditorCameraController = 
 		{
@@ -124,7 +124,7 @@ Level =
 			float LookDistance = 50,
 			float VerticalAngle = 0,
 			float HorizontalAngle = 0,
-			Vec3 LookTarget = [0.160164446, -5.75638676, 40],
+			Vec3 LookTarget = [3.48144555, 0.599857569, 40],
 			float MoveSensitivity = 1,
 		},
 		EditorRenderer = 
@@ -180,7 +180,7 @@ Level =
 		},
 		Transform = 
 		{
-			Vec3 Translation = [-12.1716909, -6.19999981, 1.74890232],
+			Vec3 Translation = [-12.1716909, -6.19999981, 1.74890137],
 			Vec3 Scale = [4.05657387, 1.33604038, 1.33604038],
 			Quat Rotation = [0, 0, 0, 1],
 		},
@@ -238,11 +238,49 @@ Level =
 		},
 		Named = 
 		{
+			string Name = "Background",
+		},
+		Transform = 
+		{
+			Vec3 Translation = [0, 0, -1],
+			Vec3 Scale = [2, 2, 2],
+			Quat Rotation = [0, 0, 0, 1],
+		},
+		Sprite = 
+		{
+			bool Visible = true,
+			bool VisibilityCulling = true,
+			bool VisibilityEvents = true,
+			bool CastShadows = false,
+			Vec4 Color = [1, 1, 1, 0.100000001],
+			BlendMode BlendMode = Alpha,
+			SpriteGeometryMode GeometryMode = ZPlane,
+			string SpriteLayer = "52ad5fa30d7fcd50:DefaultSpriteLayer",
+			string SpriteSource = "5a32f713be357c40:MainMenu",
+			bool RenderMask = false,
+			bool FlipX = false,
+			bool FlipY = false,
+			bool AnimationActive = true,
+			float AnimationSpeed = 1,
+			uint StartFrame = 0,
+		},
+		MenuFade = 
+		{
+		},
+	},
+	Cog = 
+	{
+		LinkId = 
+		{
+			uint Id = 6,
+		},
+		Named = 
+		{
 			string Name = "Credits",
 		},
 		Transform = 
 		{
-			Vec3 Translation = [0, -6.19999981, 1.74890232],
+			Vec3 Translation = [0, -6.19999981, 1.74890137],
 			Vec3 Scale = [6.1657896, 1.33604038, 1.33604038],
 			Quat Rotation = [0, 0, 0, 1],
 		},
@@ -296,7 +334,61 @@ Level =
 	{
 		LinkId = 
 		{
-			uint Id = 6,
+			uint Id = 7,
+		},
+		Named = 
+		{
+			string Name = "TutorialFinalAnim",
+		},
+		Transform = 
+		{
+			Vec3 Translation = [6.75, -6.19999981, 37.3766479],
+			Vec3 Scale = [2.60008335, 4.20646524, 3.30802345],
+			Quat Rotation = [0, 0, 0, 1],
+		},
+		Sprite = 
+		{
+			bool Visible = true,
+			bool VisibilityCulling = true,
+			bool VisibilityEvents = true,
+			bool CastShadows = false,
+			Vec4 Color = [1, 1, 1, 1],
+			BlendMode BlendMode = Alpha,
+			SpriteGeometryMode GeometryMode = ZPlane,
+			string SpriteLayer = "52ad5fa30d7fcd50:DefaultSpriteLayer",
+			string SpriteSource = "5a0477eabfbb0510:TutorialFinalAnim",
+			bool RenderMask = false,
+			bool FlipX = false,
+			bool FlipY = false,
+			bool AnimationActive = false,
+			float AnimationSpeed = 1,
+			uint StartFrame = 0,
+		},
+		MenuStuff = 
+		{
+			string LevelToload = "5a0e9cf801ddcea1:Tutorial",
+		},
+		Reactive = 
+		{
+			bool Active = true,
+			bool CaptureMouse = true,
+		},
+		BoxCollider = 
+		{
+			bool Ghost = false,
+			bool SendsMessages = true,
+			bool Seamless = true,
+			string MaterialName = "4de020863e872da8:DefaultPhysicsMaterial",
+			string SerializedGroupName = "4e740859314e5515:DefaultGroup",
+			Vec3 Offset = [0, 0, 0],
+			Vec3 Size = [0.5, 0.5, 0.5],
+		},
+	},
+	Cog = 
+	{
+		LinkId = 
+		{
+			uint Id = 8,
 		},
 		Named = 
 		{
@@ -304,7 +396,7 @@ Level =
 		},
 		Transform = 
 		{
-			Vec3 Translation = [12.2550697, -6.33644342, 1.74890232],
+			Vec3 Translation = [12.2550697, -6.33644342, 1.74890137],
 			Vec3 Scale = [4.21896553, 1.58211207, 1.58211207],
 			Quat Rotation = [0, 0, 0, 1],
 		},
@@ -361,42 +453,7 @@ Level =
 	{
 		LinkId = 
 		{
-			uint Id = 7,
-		},
-		Named = 
-		{
-			string Name = "Background",
-		},
-		Transform = 
-		{
-			Vec3 Translation = [0, 0, -1],
-			Vec3 Scale = [2, 2, 2],
-			Quat Rotation = [0, 0, 0, 1],
-		},
-		Sprite = 
-		{
-			bool Visible = true,
-			bool VisibilityCulling = true,
-			bool VisibilityEvents = true,
-			bool CastShadows = false,
-			Vec4 Color = [1, 1, 1, 1],
-			BlendMode BlendMode = Alpha,
-			SpriteGeometryMode GeometryMode = ZPlane,
-			string SpriteLayer = "52ad5fa30d7fcd50:DefaultSpriteLayer",
-			string SpriteSource = "5a32f713be357c40:MainMenu",
-			bool RenderMask = false,
-			bool FlipX = false,
-			bool FlipY = false,
-			bool AnimationActive = true,
-			float AnimationSpeed = 1,
-			uint StartFrame = 0,
-		},
-	},
-	Cog = 
-	{
-		LinkId = 
-		{
-			uint Id = 8,
+			uint Id = 9,
 		},
 		Named = 
 		{
@@ -434,41 +491,6 @@ Level =
 		MenuStuff = 
 		{
 			string LevelToload = "5a3b13b45c637f8e:Controls",
-		},
-	},
-	Cog = 
-	{
-		LinkId = 
-		{
-			uint Id = 9,
-		},
-		Named = 
-		{
-			string Name = "TutorialFinalAnim",
-		},
-		Transform = 
-		{
-			Vec3 Translation = [6.75, -6.19999981, 37.3766479],
-			Vec3 Scale = [2.60008335, 4.20646524, 3.30802345],
-			Quat Rotation = [0, 0, 0, 1],
-		},
-		Sprite = 
-		{
-			bool Visible = true,
-			bool VisibilityCulling = true,
-			bool VisibilityEvents = true,
-			bool CastShadows = false,
-			Vec4 Color = [1, 1, 1, 1],
-			BlendMode BlendMode = Alpha,
-			SpriteGeometryMode GeometryMode = ZPlane,
-			string SpriteLayer = "52ad5fa30d7fcd50:DefaultSpriteLayer",
-			string SpriteSource = "5a0477eabfbb0510:TutorialFinalAnim",
-			bool RenderMask = false,
-			bool FlipX = false,
-			bool FlipY = false,
-			bool AnimationActive = false,
-			float AnimationSpeed = 1,
-			uint StartFrame = 0,
 		},
 	},
 },

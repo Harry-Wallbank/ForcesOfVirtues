@@ -1,0 +1,15 @@
+class BattleSounds : ZilchComponent
+{
+    function Initialize(init : CogInitializer)
+    {
+        Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
+    }
+
+    function OnLogicUpdate(event : UpdateEvent)
+    {
+        if(this.LevelSettings.BattleScriptLoader.Battle && !this.Owner.SoundEmitter.IsPlaying())
+            this.Owner.SoundEmitter.PlayCue(SoundCue.BattleMusic);
+        if(!this.LevelSettings.BattleScriptLoader.Battle && this.Owner.SoundEmitter.IsPlaying())
+            this.Owner.SoundEmitter.Stop();
+    }
+}
