@@ -18,6 +18,8 @@ class MenuStuff : ZilchComponent
 
     function LoadLevel(level: Level) : Space
     {
+        this.Space.TimeSpace.Paused = false;
+        Console.WriteLine(this.Space.TimeSpace.Paused);
         var space = this.GameSession.CreateSpace(Archetype.Find("Space"));
         space.LoadLevel(this.LevelToload);
         this.Space.Destroy();

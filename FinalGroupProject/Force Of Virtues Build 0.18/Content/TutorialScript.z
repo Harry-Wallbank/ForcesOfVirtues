@@ -1,6 +1,7 @@
 class TutorialScript : ZilchComponent
 {
     var Timer : Real;
+    [Static]
     var Number : Integer = 1;
     function Initialize(init : CogInitializer)
     {
@@ -9,27 +10,28 @@ class TutorialScript : ZilchComponent
 
     function OnLogicUpdate(event : UpdateEvent)
     {
-        Console.WriteLine(this.Timer);
         this.Timer += event.Dt;
-        if(this.Timer >= 5 && this.Number == 1 || Zero.Keyboard.KeyIsPressed(Keys.Space) && this.Number == 1)
+        if(this.Timer >= 5 && TutorialScript.Number == 1 || Zero.Keyboard.KeyIsPressed(Keys.Space) && TutorialScript.Number == 1)
         {
-            ++ this.Number;
+            ++ TutorialScript.Number;
             this.Owner.Sprite.SpriteSource = SpriteSource.Second;
             this.Timer = 0.0;
         }
-        else if(this.Timer >= 5 && this.Number == 2 || Zero.Keyboard.KeyIsPressed(Keys.Space) && this.Number == 2)
+        else if(this.Timer >= 5 && TutorialScript.Number == 2 || Zero.Keyboard.KeyIsPressed(Keys.Space) && TutorialScript.Number == 2)
         {
-            ++ this.Number;
+            ++ TutorialScript.Number;
             this.Owner.Sprite.SpriteSource = SpriteSource.Third;
             this.Timer = 0.0;
         }
-        else if(this.Timer >= 5 && this.Number == 3 || Zero.Keyboard.KeyIsPressed(Keys.Space) && this.Number == 3)
+        else if(this.Timer >= 5 && TutorialScript.Number == 3 || Zero.Keyboard.KeyIsPressed(Keys.Space) && TutorialScript.Number == 3)
         {
-            ++ this.Number;
+            ++ TutorialScript.Number;
             this.Owner.Sprite.SpriteSource = SpriteSource.Fourth;
             this.Timer = 0.0;
         }
-        else if(this.Timer >= 5 && this.Number == 4 || Zero.Keyboard.KeyIsPressed(Keys.Space) && this.Number == 4)
+        else if(this.Timer >= 5 && TutorialScript.Number == 4 || Zero.Keyboard.KeyIsPressed(Keys.Space) && TutorialScript.Number == 4)
+        {
             this.Space.LoadLevel(Level.StartMenu);
+        }
     }
 }

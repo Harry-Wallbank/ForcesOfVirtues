@@ -84,7 +84,6 @@ class BoardManager : ZilchComponent
             enemy.EnemyNum.RightNum = numbers.Y as Integer;
             enemy.EnemyNum.BottomNum = numbers.Z as Integer;
             enemy.EnemyNum.TopNum = numbers.W as Integer;
-            enemy.EnemyScript.TakeTurn = x /10;
             ++this.LevelSettings.Ending.EnemiesTotal;
         }
     }

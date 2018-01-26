@@ -8,6 +8,7 @@ class BackgroundMusic : ZilchComponent
 
     function OnLogicUpdate(event : UpdateEvent)
     {
+        Console.WriteLine(this.Space.TimeSpace.Paused);
         if(this.LevelSettings.BattleScriptLoader.Battle && this.Owner.SoundEmitter.IsPlaying())
             this.Owner.SoundEmitter.Volume = 0;
         if(!this.LevelSettings.BattleScriptLoader.Battle && this.Owner.SoundEmitter.IsPlaying())

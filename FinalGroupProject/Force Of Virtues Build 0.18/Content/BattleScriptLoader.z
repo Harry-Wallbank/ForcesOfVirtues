@@ -31,7 +31,6 @@ class BattleScriptLoader : ZilchComponent
     
     function OnLogicUpdate(event : UpdateEvent)
     {
-        Console.WriteLine("Battle Script :`this.Battle`");
         if(this.BattleTimerBool)
             this.BattleTimer += event.Dt;
         if(this.BattleScriptEnabled)
@@ -82,7 +81,10 @@ class BattleScriptLoader : ZilchComponent
                 foreach(var player in this.LevelSettings.BoardManager.PlayerArray)
                 {
                     if(player != null)
+                    {
+                        player.PlayerMovement.PlayerTurn = true;
                         player.CollisionScript.Battling = false;
+                    }
                 }
             }
         }
@@ -116,7 +118,10 @@ class BattleScriptLoader : ZilchComponent
                 foreach(var player in this.LevelSettings.BoardManager.PlayerArray)
                 {
                     if(player != null)
+                    {
+                        player.PlayerMovement.PlayerTurn = true;
                         player.CollisionScript.Battling = false;
+                    }
                 }
             }
         }

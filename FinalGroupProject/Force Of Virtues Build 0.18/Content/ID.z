@@ -1,5 +1,4 @@
 class ID : ZilchComponent
 {
-    [Property]
     var ID : Integer = -1;
 }

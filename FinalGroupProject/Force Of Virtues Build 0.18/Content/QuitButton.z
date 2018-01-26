@@ -14,7 +14,9 @@ class QuitButton : ZilchComponent
         Zero.Connect(this.Owner, Events.MouseUp, this.OnMouseUp);
     }
     function LoadLevel(level: Level) : Space
-    {
+    { 
+        this.Space.TimeSpace.Paused = false;
+        PlayerMovement.Paused = false;
         var space = this.GameSession.CreateSpace(Archetype.Find("Space"));
         space.LoadLevel(this.LevelToload);
         this.Space.Destroy();

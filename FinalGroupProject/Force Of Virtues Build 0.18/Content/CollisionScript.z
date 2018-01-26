@@ -16,7 +16,6 @@ class CollisionScript : ZilchComponent
     }
     function OnLogicUpdate(event : UpdateEvent)
     {
-        Console.WriteLine("Collision Script :`this.Battling`");
         this.Owner.PlayerMovement.Left = true;
         this.Owner.PlayerMovement.Right = true;
         this.Owner.PlayerMovement.Top = true;
