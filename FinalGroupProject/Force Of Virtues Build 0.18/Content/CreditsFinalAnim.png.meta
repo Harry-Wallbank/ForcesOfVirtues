@@ -1,0 +1,20 @@
+ImageContent = 
+{
+	SpriteSourceBuilder = 
+	{
+		string Name = "CreditsFinalAnim",
+		uint64 ResourceId = 5a04750205225f2e,
+		uint64 AtlasId = 5274cf95e4a661fd,
+		uint FrameSizeX = 148,
+		uint FrameSizeY = 22,
+		uint FrameCount = 2,
+		float FrameDelay = 0.5,
+		float OriginX = 74,
+		float OriginY = 11,
+		float PixelsPerUnit = 64,
+		bool Smoothing = false,
+		bool Looping = true,
+		Vec4 Slices = [0, 0, 0, 0],
+		SpriteFill Fill = Stretch,
+	},
+},

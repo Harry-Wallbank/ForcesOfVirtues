@@ -1,0 +1,120 @@
+class PlayerMovement : ZilchComponent
+{
+    [Static]
+    var Battling : Boolean;
+    [Static]
+    var Paused : Boolean;
+    
+    var PlayerClicked : Boolean;
+    var PlayerTurn : Boolean;
+    [Static]
+    var Leftmove : Keys = Keys.A;
+    [Static]
+    var Rightmove : Keys = Keys.D;
+    [Static]
+    var Up : Keys = Keys.W;
+    [Static]
+    var Down : Keys = Keys.S;
+    [Static]
+    var EndTurn : Keys = Keys.Space;
+    
+    var Left : Boolean = true;
+    var Right : Boolean = true;
+    var Top : Boolean = true;
+    var Bottom : Boolean = true;
+    
+    
+    function Initialize(init : CogInitializer)
+    {
+        this.PlayerTurn = true;
+        Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
+        Zero.Connect(Zero.Keyboard, Events.KeyDown, this.OnKeyDown);
+        Zero.Connect(this.Owner, Events.MouseUp, this.OnMouseUp);
+        Zero.Connect(this.Owner, Events.MouseEnter, this.OnMouseEnter);
+        Zero.Connect(this.Owner, Events.MouseExit, this.OnMouseExit);
+    }
+    
+    function OnLogicUpdate(event : UpdateEvent)
+    {
+        if(!this.PlayerTurn)
+        {
+            var enemiesMoved : Integer = 0;
+            foreach(var enemy in this.LevelSettings.BoardManager.EnemyArray)
+            {
+                if(enemy != null)
+                {
+                    if(!enemy.EnemyScript.EnemyTurn && enemy.EnemyScript.PlayerTurnEnded)
+                    {
+                        ++enemiesMoved;
+                    }
+                }
+            }
+            if(enemiesMoved == this.LevelSettings.BoardManager.EnemyArray.Count)
+            {
+                this.PlayerTurn = true;
+            }
+        }
+    }
+    
+    function OnKeyDown(event : KeyboardEvent)
+    {
+        if(!PlayerMovement.Battling && !PlayerMovement.Paused)
+        {
+            if(this.PlayerClicked && this.PlayerTurn)
+            {
+                if(event.Key == PlayerMovement.Leftmove && this.Left)
+                {
+                    this.Owner.Transform.Translation -= Real3(1.0,0,0);
+                    this.PlayerClicked = !this.PlayerClicked;
+                    this.PlayerTurn = false;
+                    this.Owner.Sprite.FlipX = false;
+                }
+                else if(event.Key == PlayerMovement.Rightmove && this.Right)
+                {
+                    this.Owner.Transform.Translation += Real3(1.0,0,0);
+                    this.PlayerClicked = !this.PlayerClicked;
+                    this.PlayerTurn = false;
+                    this.Owner.Sprite.FlipX = true;
+                }
+                else if(event.Key == PlayerMovement.Up && this.Top)
+                {
+                    this.Owner.Transform.Translation += Real3(0,1.0,0);
+                    this.PlayerClicked = !this.PlayerClicked;
+                    this.PlayerTurn = false;
+                }
+                else if(event.Key == PlayerMovement.Down && this.Bottom)
+                {
+                    this.Owner.Transform.Translation -= Real3(0,1.0,0);
+                    this.PlayerClicked = !this.PlayerClicked;
+                    this.PlayerTurn = false;
+                }
+            }
+            if(event.Key == PlayerMovement.EndTurn)
+            {
+                this.PlayerTurn = false;
+            }
+        }
+    }
+
+    function OnMouseUp(event : ViewportMouseEvent)
+    {
+        if(this.PlayerTurn && !PlayerMovement.Battling)
+        foreach(var player in this.LevelSettings.BoardManager.PlayerArray)
+        {
+            if(player != null)
+                player.PlayerMovement.PlayerClicked = false;
+        }
+            this.PlayerClicked = true;
+    }
+
+    function OnMouseExit(event : ViewportMouseEvent)
+    {
+            this.Owner.Sprite.Color = this.Owner.Sprite.Color + Real4(0.0, 0.0, 0.0, 1.0 - this.Owner.Sprite.Color.W);
+    }
+
+    function OnMouseEnter(event : ViewportMouseEvent)
+    {
+        if(this.PlayerTurn && !PlayerMovement.Battling)
+            this.Owner.Sprite.Color = this.Owner.Sprite.Color + Real4(0.0, 0.0, 0.0, 0.75 - this.Owner.Sprite.Color.W);
+    }
+}

@@ -1,0 +1,47 @@
+class NumChanger : ZilchComponent
+{
+    [Static]
+    var Visible : Boolean = true;
+    var Timer : Real;
+    var TimerBool : Boolean = true;
+    function Initialize(init : CogInitializer)
+    {
+        Zero.Connect(this.Space,Events.LogicUpdate,this.OnLogicUpdate);
+    }
+    
+    function OnLogicUpdate(event : UpdateEvent)
+    {
+        if(this.TimerBool)
+            this.Timer += event.Dt;
+        if(this.Timer <= 2)
+        {
+            if(this.Owner.Parent.Name == "Player")
+            {
+                if(this.Owner.Name == "Right")
+                    this.Owner.SpriteText.Text = "`this.Owner.Parent.CollisionScript.RightNum`";
+                if(this.Owner.Name == "Left")
+                    this.Owner.SpriteText.Text = "`this.Owner.Parent.CollisionScript.LeftNum`";
+                if(this.Owner.Name == "Bottom")
+                    this.Owner.SpriteText.Text = "`this.Owner.Parent.CollisionScript.BottomNum`";
+                if(this.Owner.Name == "Top")
+                    this.Owner.SpriteText.Text = "`this.Owner.Parent.CollisionScript.TopNum`";
+            }
+            if(this.Owner.Parent.Name == "Enemy")
+            {
+                if(this.Owner.Name == "Right")
+                    this.Owner.SpriteText.Text = "`this.Owner.Parent.EnemyNum.RightNum`";
+                if(this.Owner.Name == "Left")
+                    this.Owner.SpriteText.Text = "`this.Owner.Parent.EnemyNum.LeftNum`";
+                if(this.Owner.Name == "Bottom")
+                    this.Owner.SpriteText.Text = "`this.Owner.Parent.EnemyNum.BottomNum`";
+                if(this.Owner.Name == "Top")
+                    this.Owner.SpriteText.Text = "`this.Owner.Parent.EnemyNum.TopNum`";
+            }
+            this.TimerBool = false;
+        }
+        if(NumChanger.Visible)
+            this.Owner.SpriteText.Visible = true;
+        if(!NumChanger.Visible)
+            this.Owner.SpriteText.Visible = false;
+    }
+}

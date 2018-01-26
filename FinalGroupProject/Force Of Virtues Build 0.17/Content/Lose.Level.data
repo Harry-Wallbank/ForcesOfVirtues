@@ -204,7 +204,7 @@ Level =
 		},
 		MenuStuff = 
 		{
-			string LevelToload = "554cea0f94af672f:Level",
+			string LevelToload = "5a78fff3b50957b6:StartMenu",
 		},
 		Reactive = 
 		{

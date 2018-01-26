@@ -46,5 +46,7 @@ Build 0.16
 Build 0.17
 	Fixed a bug that was caused when the enemies got falsly deleted from the array and was then not taken into the collision
 	script which made it so that they were never checked for
+Build 0.18
+	Final version of game stable with miniamal chance of bugs
 	
 
