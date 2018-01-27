@@ -48,5 +48,8 @@ Build 0.17
 	script which made it so that they were never checked for
 Build 0.18
 	Final version of game stable with miniamal chance of bugs
-	
+Build 0.19
+	Fixed a bug where enemy would spawn insie of the left and bottom wall
+	Fixed a bug where when you had one player you couldnt end your turn without hitting spacebar
+
 

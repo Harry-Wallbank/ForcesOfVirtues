@@ -1,0 +1,106 @@
+class CollisionScript : ZilchComponent
+{
+    var Battling : Boolean = false;
+    
+    var LeftNum : Integer = 0;
+    var RightNum : Integer = 0;
+    var TopNum : Integer = 0;
+    var BottomNum : Integer = 0;
+    
+    var Sword : Cog;
+    
+    function Initialize(init : CogInitializer)
+    {
+        this.Sword = this.Space.FindFirstObjectByName("Sword");
+        Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
+    }
+    function OnLogicUpdate(event : UpdateEvent)
+    {
+        this.Owner.PlayerMovement.Left = true;
+        this.Owner.PlayerMovement.Right = true;
+        this.Owner.PlayerMovement.Top = true;
+        this.Owner.PlayerMovement.Bottom = true;
+        //checks for enemies
+        foreach(var enemy in this.LevelSettings.BoardManager.EnemyArray)
+        {
+            if(enemy.ID.ID != -1 && enemy != null)
+            {
+                var enemyPos = enemy.Transform.Translation;
+                //checks left
+                if(Math.Distance((this.Owner.Transform.Translation - Real3(1,0,0)), enemyPos) < 0.01 && !this.Battling)
+                {
+                    this.LevelSettings.BattleScriptLoader.BattleScriptEnabled = true;
+                    this.LevelSettings.BattleScriptLoader.Enemy = enemy;
+                    this.LevelSettings.BattleScriptLoader.Player = this.Owner;
+                    this.Battling = true;
+                    this.Sword.SwordbattleScript.PlayerNum = this.LeftNum;
+                    this.Sword.SwordbattleScript.EnemyNum = enemy.EnemyNum.RightNum;
+                    this.Sword.SwordbattleScript.Moving = true;
+                    
+                }
+                //checks bellow
+                if(Math.Distance((this.Owner.Transform.Translation - Real3(0,1,0)), enemyPos) < 0.01 && !this.Battling)
+                {
+                    this.LevelSettings.BattleScriptLoader.BattleScriptEnabled = true;
+                    this.LevelSettings.BattleScriptLoader.Enemy = enemy;
+                    this.LevelSettings.BattleScriptLoader.Player = this.Owner;
+                    this.Battling = true;
+                    this.Sword.SwordbattleScript.PlayerNum = this.BottomNum;
+                    this.Sword.SwordbattleScript.EnemyNum = enemy.EnemyNum.TopNum;
+                    this.Sword.SwordbattleScript.Moving = true;
+                }
+                //checks right
+                if(Math.Distance((this.Owner.Transform.Translation + Real3(1,0,0)), enemyPos) < 0.01 && !this.Battling)
+                {
+                    this.LevelSettings.BattleScriptLoader.BattleScriptEnabled = true;
+                    this.LevelSettings.BattleScriptLoader.Enemy = enemy;
+                    this.LevelSettings.BattleScriptLoader.Player = this.Owner;
+                    this.Battling = true;
+                    this.Sword.SwordbattleScript.PlayerNum = this.RightNum;
+                    this.Sword.SwordbattleScript.EnemyNum = enemy.EnemyNum.LeftNum;
+                    this.Sword.SwordbattleScript.Moving = true;
+                }
+                //checks above
+                if(Math.Distance((this.Owner.Transform.Translation + Real3(0,1,0)), enemyPos)  < 0.01 && !this.Battling)
+                {
+                    this.LevelSettings.BattleScriptLoader.BattleScriptEnabled = true;
+                    this.LevelSettings.BattleScriptLoader.Enemy = enemy;
+                    this.LevelSettings.BattleScriptLoader.Player = this.Owner;
+                    this.Battling = true;
+                    this.Sword.SwordbattleScript.PlayerNum = this.TopNum;
+                    this.Sword.SwordbattleScript.EnemyNum = enemy.EnemyNum.BottomNum;
+                    this.Sword.SwordbattleScript.Moving = true;
+                }
+            }
+        }
+        //checks for players
+        foreach(var player in this.LevelSettings.BoardManager.PlayerArray)
+        {
+            if(player != null)
+            {
+                var playerPos = player.Transform.Translation;
+                if(this.Owner.Transform.Translation - Real3(1,0,0) == playerPos)
+                    this.Owner.PlayerMovement.Left = false;
+                if(this.Owner.Transform.Translation + Real3(1,0,0) == playerPos)
+                    this.Owner.PlayerMovement.Right = false;
+                if(this.Owner.Transform.Translation - Real3(0,1,0) == playerPos)
+                    this.Owner.PlayerMovement.Bottom = false;
+                if(this.Owner.Transform.Translation + Real3(0,1,0) == playerPos)
+                    this.Owner.PlayerMovement.Top = false;
+            }
+        }
+        //checks for walls
+        foreach(var wall in this.LevelSettings.BoardManager.WallArray)
+        {
+            var wallPos = wall.Transform.Translation;
+            if(this.Owner.Transform.Translation - Real3(1,0,0) == wallPos)
+                this.Owner.PlayerMovement.Left = false;
+            if(this.Owner.Transform.Translation + Real3(1,0,0) == wallPos)
+                this.Owner.PlayerMovement.Right = false;
+            if(this.Owner.Transform.Translation - Real3(0,1,0) == wallPos)
+                this.Owner.PlayerMovement.Bottom = false;
+            if(this.Owner.Transform.Translation + Real3(0,1,0) == wallPos)
+                this.Owner.PlayerMovement.Top = false;
+        }
+    }
+}

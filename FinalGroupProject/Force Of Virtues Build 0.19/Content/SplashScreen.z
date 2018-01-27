@@ -1,0 +1,36 @@
+class SplashScreen : ZilchComponent
+{
+    var FadeIn : Boolean = true;
+    var FadeOut : Boolean = false;
+    var MaxAlpha : Real = 0.99;
+    var MinAlpha : Real = 0.05;
+    var FullTimer : Real;
+    var MaxTime : Real = 0.5;
+    function Initialize(init : CogInitializer)
+    {
+        Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
+    }
+
+    function OnLogicUpdate(event : UpdateEvent)
+    {
+        if(this.Owner.Sprite.Color.W <= this.MinAlpha && this.FadeOut)
+        {
+            this.Space.LoadLevel(Level.StartMenu);
+            this.FadeIn = false;
+            this.FadeOut = false;
+        }
+        if(this.Owner.Sprite.Color.W >= this.MaxAlpha && this.FadeIn)
+        {
+            this.FullTimer += event.Dt;
+            if(this.FullTimer >= this.MaxTime)
+            {
+                this.FadeOut = true;
+                this.FadeIn = false;
+            }
+        }
+        if(this.Owner.Sprite.Color.W <= this.MaxAlpha && this.FadeIn)
+            this.Owner.Sprite.Color += Real4(0,0,0,0.01);
+        if(this.Owner.Sprite.Color.W >= this.MinAlpha && this.FadeOut)
+            this.Owner.Sprite.Color -= Real4(0,0,0,0.01);
+    }
+}

@@ -1,0 +1,11 @@
+AudioContent = 
+{
+	SoundBuilder = 
+	{
+		string Name = "bensound-epic",
+		uint64 ResourceId = 5a0eb20aa0b1cd28,
+		bool Compressed = false,
+		bool Streamed = false,
+		SoundLoadType LoadType = Decompress,
+	},
+},

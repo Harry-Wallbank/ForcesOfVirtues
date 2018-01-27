@@ -1,0 +1,37 @@
+class TutorialScript : ZilchComponent
+{
+    var Timer : Real;
+    [Static]
+    var Number : Integer = 1;
+    function Initialize(init : CogInitializer)
+    {
+        Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
+    }
+
+    function OnLogicUpdate(event : UpdateEvent)
+    {
+        this.Timer += event.Dt;
+        if(this.Timer >= 5 && TutorialScript.Number == 1 || Zero.Keyboard.KeyIsPressed(Keys.Space) && TutorialScript.Number == 1)
+        {
+            ++ TutorialScript.Number;
+            this.Owner.Sprite.SpriteSource = SpriteSource.Second;
+            this.Timer = 0.0;
+        }
+        else if(this.Timer >= 5 && TutorialScript.Number == 2 || Zero.Keyboard.KeyIsPressed(Keys.Space) && TutorialScript.Number == 2)
+        {
+            ++ TutorialScript.Number;
+            this.Owner.Sprite.SpriteSource = SpriteSource.Third;
+            this.Timer = 0.0;
+        }
+        else if(this.Timer >= 5 && TutorialScript.Number == 3 || Zero.Keyboard.KeyIsPressed(Keys.Space) && TutorialScript.Number == 3)
+        {
+            ++ TutorialScript.Number;
+            this.Owner.Sprite.SpriteSource = SpriteSource.Fourth;
+            this.Timer = 0.0;
+        }
+        else if(this.Timer >= 5 && TutorialScript.Number == 4 || Zero.Keyboard.KeyIsPressed(Keys.Space) && TutorialScript.Number == 4)
+        {
+            this.Space.LoadLevel(Level.StartMenu);
+        }
+    }
+}

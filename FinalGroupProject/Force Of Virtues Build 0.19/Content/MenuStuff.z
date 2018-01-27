@@ -1,0 +1,58 @@
+class MenuStuff : ZilchComponent
+{
+    [Property]
+    var LevelToload: Level; 
+  
+    [Dependency]
+    var Sprite : Sprite;
+    
+    function Initialize(init : CogInitializer)
+    {   
+        Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
+        Zero.Connect(this.Owner, Events.MouseEnter, this.OnMouseEnter);
+        Zero.Connect(this.Owner, Events.MouseExit, this.OnMouseExit);
+        Zero.Connect(this.Owner, Events.MouseUp, this.OnMouseUp);
+        
+        this.Owner.Sprite.Color = this.Owner.Sprite.Color + Real4(0.0, 0.0, 0.0, 0.75 - this.Owner.Sprite.Color.W);
+    }
+
+    function LoadLevel(level: Level) : Space
+    {
+        this.Space.TimeSpace.Paused = false;
+        Console.WriteLine(this.Space.TimeSpace.Paused);
+        var space = this.GameSession.CreateSpace(Archetype.Find("Space"));
+        space.LoadLevel(this.LevelToload);
+        this.Space.Destroy();
+        return space;
+    }
+
+    function OnMouseUp(event : ViewportMouseEvent)
+    {
+        var space = this.LoadLevel(this.LevelToload);
+        this.Owner.Destroy();
+    }
+
+    function OnMouseExit(event : ViewportMouseEvent)
+    {
+        this.Owner.Sprite.CurrentFrame = 0;
+        this.Owner.Sprite.AnimationActive = false;
+        this.Owner.Sprite.Color = this.Owner.Sprite.Color + Real4(0.0, 0.0, 0.0, 0.75 - this.Owner.Sprite.Color.W);
+    }
+
+    function OnMouseEnter(event : ViewportMouseEvent)
+    {
+        this.Owner.Sprite.CurrentFrame = 1;
+        this.Owner.Sprite.AnimationActive = true;
+        this.Owner.Sprite.Color = this.Owner.Sprite.Color + Real4(0.0, 0.0, 0.0, 1.0 - this.Owner.Sprite.Color.W);
+    }
+
+    function OnLogicUpdate(event : UpdateEvent)
+    {
+        if(this.Owner.Sprite.CurrentFrame == 0)
+        {
+            this.Owner.Sprite.Color == Real4(0.0,0.0,0.0,0.25);
+        }
+    }
+}
+
+
